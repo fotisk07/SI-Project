@@ -9,9 +9,7 @@ start = [1,6]
 ksi = 100
 
 def f(x, y):
-    print(x.shape)
     pos = np.array([x,y])
-    print(pos.shape)
     #return ksi*np.linalg.norm(pos-start,axis=0)
     return np.sqrt(np.square(x-start[0])+np.square(y-start[1]))
 
@@ -22,7 +20,7 @@ y = np.linspace(0, 10, res_y)
 
 X, Y = np.meshgrid(x, y)
 Z = f(X, Y)
-print(Z.shape)
+
 
 fig = plt.figure()
 ax = plt.axes(projection='3d')
