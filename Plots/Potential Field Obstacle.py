@@ -1,13 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
-obs=[4,5]
+obs1=[4,5]
+obs2 = [1,2]
 d0 = 5
 res_x = 100
 res_y = 100
 start = [1,6]
 def ro(x,y):
-    return np.sqrt(np.square(x-obs[0])+np.square(y-obs[1]))
+    return min(np.sqrt(np.square(x-obs[0])+np.square(y-obs[1]))
 
 def fr(x,y):
         return 10*np.square((1/ro(x,y))-1/d0)
