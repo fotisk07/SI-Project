@@ -1,10 +1,11 @@
 import numpy as np
 import math as m
-#Init variables
+
 
 class Lidar:
-    def __init__(self,dim=(15,15),angle_step=1, ray_step=1,
-                 mu=1,std=0.01,pos=np.array([10,10])):
+    '''Class that defines the Lidar object and comes with the simulation properties needed'''
+
+    def __init__(self,dim=(15,15),angle_step=1, ray_step=1, mu=1,std=0.01,pos=np.array([10,10])):
         self.dim = dim
         self.angle_step = angle_step
         self.ray_step = ray_step
@@ -22,18 +23,19 @@ class Lidar:
 
         self.carte[3][:]=1
 
-
     def noise(self, clean_data):
+        '''Function that adds noise from a normal distribution to the data provided to mimic real world'''
         data = np.array(clean_data)
         noise = np.random.normal(self.mu,self.std,[int(360/self.angle_step),2])
         return noise+clean_data
 
     def simulate(self, show=False):
+        '''Simulates data from one complete lidar rotation'''
         data=[]
-        if show == False:
+        if show == True:
             print(self.carte)
         for i in range(int(360/self.angle_step)):
-            current_ray = 1 
+            current_ray = 1
             while True:
                 x_current = int(m.cos(m.radians(i))*current_ray)
                 y_current = int(m.sin(m.radians(i))*current_ray)
@@ -46,6 +48,3 @@ class Lidar:
                         data.append((current_ray , i))
                         break
         return data
-                
-  
-
