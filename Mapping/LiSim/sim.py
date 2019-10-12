@@ -21,7 +21,8 @@ class Lidar:
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
 
-        self.carte[3][:]=1
+        self.carte[6][:]=1
+
 
     def noise(self, clean_data):
         '''Function that adds noise from a normal distribution to the data provided to mimic real world'''
@@ -47,4 +48,4 @@ class Lidar:
                 except:
                         data.append((current_ray , i))
                         break
-        return data
+        return np.array(data)
