@@ -40,12 +40,9 @@ class Lidar:
             while True:
                 x_current = int(m.cos(m.radians(i))*current_ray)
                 y_current = int(m.sin(m.radians(i))*current_ray)
-                try:
-                    if self.carte[x_current+self.pos[0]][y_current+self.pos[1]] == 1:
-                        data.append((self.current_ray , i))
-                        break
-                    current_ray += self.ray_step
-                except:
-                        data.append((current_ray , i))
-                        break
+
+                if self.carte[x_current+self.pos[0]][y_current+self.pos[1]] == 1:
+                    data.append((current_ray , i))
+                    break
+                current_ray += self.ray_step
         return np.array(data)
