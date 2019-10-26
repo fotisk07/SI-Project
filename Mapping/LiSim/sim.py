@@ -1,6 +1,7 @@
 import numpy as np
 import math as m
-
+import matplotlib.pyplot as plt
+plt.style.use('classic')
 
 class Lidar:
     '''Class that defines the Lidar object and comes with the simulation properties needed'''
@@ -21,11 +22,17 @@ class Lidar:
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
 
-        self.carte[6,:]=1
+        self.carte[15,:]=1
+
+    def plot_map(self,show):
+        plt.imshow(self.carte)
+        plt.colorbar()
+        plt.savefig("real_map.png")
+        if show==True:
+            plt.show()
 
     def save_carte(self):
         np.savetxt("carte.txt", self.carte, delimiter=',',fmt='%1.1f')
-
 
     def give_carte(self):
         return self.carte

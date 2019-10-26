@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
-dim = (18,35)
-pos = np.array([8,8])
+dim = (50,30)
+pos = np.array([25,10])
 logodd_occ = 0.9
 logodd_free = 0.7
 norm_scale = 0.2
