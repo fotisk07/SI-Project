@@ -18,17 +18,20 @@ measure = lidar.simulate(show=True)
 
 for i in range(360):
     try:
+        # QUESTION: Will raise an exception sometimes, why ?
         occ = (np.matmul( rotation(measure[i][1]), [measure[i][0],0] ) + pos).astype(int)
+        
         carte[occ[0]][occ[1]] += logodd_occ
+        
+        #Draw a line Lidar <-> Point, and register all points on the line as unoccupied (the lidar would have detected if not)
         points = np.array(list(bresenham(occ[0],occ[1],pos[0],pos[1])))
-
-
         for x,y in points:
             if x!=occ[0] and y!=occ[1]:
                 carte[x][y] -= logodd_free
 
 
     except:
+        # QUESTION: Why is the measurement shifted by (-1,-1) ?
             carte[occ[0]-1][occ[1]-1] += logodd_occ
             points = np.array(list(bresenham(occ[0]-1,occ[1]-1,pos[0],pos[1])))
             for x,y in points:
