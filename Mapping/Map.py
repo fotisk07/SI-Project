@@ -3,18 +3,47 @@ import math as m
 import matplotlib.pyplot as pyplot
 from LiSim import sim
 from bresenham import bresenham
+import matplotlib.pyplot as plt
 
-def rotation(theta):
-    return np.array([[np.cos(m.radians(theta)),-np.sin(m.radians(theta))],[np.sin(m.radians(theta)),np.cos(m.radians(theta))]])
-
+np.set_printoptions(precision=3)
+np.set_printoptions(suppress=True)
+plt.style.use('classic')
 dim = (10,10)
 pos = np.array([5,5])
 logodd_occ = 0.9
 logodd_free = 0.7
+norm_scale = 0.2
 carte = np.zeros(dim)
-carte[5][5] = 1000
+carte[pos[0]][pos[1]] = 1000
 lidar = sim.Lidar(dim=dim,pos=pos)
-measure = lidar.simulate(show=True)
+true_carte = lidar.give_carte()
+
+def sigmoid(X):
+    '''Function to normalize the map obtained'''
+    return 1 / (1 + np.exp(-X*norm_scale))
+
+def confusion_matrix(obs,true,show=False,re=False,print=False,save=True):
+    '''Function that saves and shows the confunsion matrix'''
+    confusion_matrix = np.square(obs-true)
+
+    if show==True:
+        print("The confusion matrix is:\n", confusion_matrix)
+    if save==True:
+        plt.imshow(confusion_matrix)
+        plt.colorbar()
+        plt.savefig("confusion_matrix.png")
+    if print==True:
+        plt.show()
+    if re==True:
+        return confusion_matrix
+
+
+def rotation(theta):
+    '''Rotation Matrix for coordinate transformations'''
+    return np.array([[np.cos(m.radians(theta)),-np.sin(m.radians(theta))],[np.sin(m.radians(theta)),np.cos(m.radians(theta))]])
+
+measure = lidar.simulate(show=False)
+
 
 for i in range(360):
 
@@ -28,6 +57,7 @@ for i in range(360):
         if x!=occ[0] or y!=occ[1]:
             carte[x][y] -= logodd_free
 
-print(carte)
-np.savetxt("produced_map.txt",carte,delimiter=',',fmt='%1.4e')
+confusion = confusion_matrix(sigmoid(carte), true_carte, print=False,re=True,save=True)
+np.savetxt("produced_map.txt",carte,delimiter=',',fmt='%1.1f')
 lidar.save_carte()
+np.savetxt("confusion_matrix.txt",confusion,delimiter=',',fmt='%1.1f')
