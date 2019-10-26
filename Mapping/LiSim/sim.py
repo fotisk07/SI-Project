@@ -23,6 +23,9 @@ class Lidar:
 
         self.carte[6][:]=1
 
+    def save_carte(self):
+        np.savetxt("carte.txt", self.carte, delimiter=',',fmt='%1.4e')
+
 
     def noise(self, clean_data):
         '''Function that adds noise from a normal distribution to the data provided to mimic real world'''

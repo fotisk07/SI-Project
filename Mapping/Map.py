@@ -29,3 +29,5 @@ for i in range(360):
             carte[x][y] -= logodd_free
 
 print(carte)
+np.savetxt("produced_map.txt",carte,delimiter=',',fmt='%1.4e')
+lidar.save_carte()
