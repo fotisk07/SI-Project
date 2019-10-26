@@ -25,7 +25,7 @@ for i in range(360):
     #Draw a line Lidar <-> Point, and register all points on the line as unoccupied (the lidar would have detected if not)
     points = np.array(list(bresenham(occ[0],occ[1],pos[0],pos[1])))
     for x,y in points:
-        if x!=occ[0] and y!=occ[1]:
+        if x!=occ[0] or y!=occ[1]:
             carte[x][y] -= logodd_free
 
 print(carte)
