@@ -56,7 +56,15 @@ class Lidar:
                 y_current = int(m.sin(m.radians(i))*current_ray)
 
                 if self.carte[x_current+self.pos[0]][y_current+self.pos[1]] == 1:
-                    data.append((self._noise(current_ray, uDist) , self._noise(theta, uTheta) , self._noise(self.pos, uPos)))
+                    data.append([current_ray, theta, self.pos])
                     break
                 current_ray += self.ray_step
-        return np.array(data)
+
+        data = np.array(data)
+
+        #Add noise to the data
+        data[:,0] = self._noise(data[:,0], uDist)
+        data[:,1] = self._noise(data[:,1], uTheta)
+        data[:,2] = self._noise(data[:,2], uPos)
+
+        return data
