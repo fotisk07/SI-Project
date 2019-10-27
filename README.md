@@ -51,6 +51,11 @@ This will install all necessery packages
 
 Please read [CONTRIBUTING](https://github.com/fotisk07/SI-Project/blob/master/CONTRIBUTING) for the process for submitting pull requests.
 
+## Secuirity
+
+Shout out to [Mateo](https://github.com/CeType) for making sure that our project has a sound secuirity policy. You will find  
+all the necesserary details [here](https://github.com/fotisk07/SI-Project/blob/master/SECURITY.md)
+
 ## Authors
 
 * **Alexander Flammant** - *Initial work*
