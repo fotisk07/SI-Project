@@ -9,15 +9,18 @@ from scipy.special import expit
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
-dim = (18,35)
-pos = np.array([8,8])
+dim = (20,20)
+pos = (2,5)
 logodd_occ = 0.9
 logodd_free = 0.7
-norm_scale = 0.2
+norm_scale = 5
 carte = np.zeros(dim)
 carte[pos[0]][pos[1]] = 1000
 lidar = sim.Lidar(dim=dim,pos=pos)
 true_carte = lidar.give_carte()
+
+
+lidar.make_path()
 
 
 def confusion_matrix(obs,true,show=False,print=False,save=True):
@@ -27,11 +30,12 @@ def confusion_matrix(obs,true,show=False,print=False,save=True):
     if show==True:
         print("The confusion matrix is:\n", confusion_matrix)
     if save==True:
+        conf = plt.figure("Confusion Matrix")
         plt.imshow(confusion_matrix)
         plt.colorbar()
-        plt.savefig("confusion_matrix.png")
+        conf.savefig("Examples/"+lidar.path+"/Confusion_matrix.png")
     if print==True:
-        plt.show()
+        conf.show()
     return confusion_matrix
 
 def rotation(theta):
@@ -39,11 +43,23 @@ def rotation(theta):
     return np.array([[np.cos(m.radians(theta)),-np.sin(m.radians(theta))],[np.sin(m.radians(theta)),np.cos(m.radians(theta))]])
 
 def plot_produced_map(carte,show=False):
+    produced = plt.figure("Output Map")
     plt.imshow(carte)
     plt.colorbar()
-    plt.savefig("produced_map.png")
+    produced.savefig("Examples/"+lidar.path+"/Produced_map.png")
     if show == True:
+        produced.show()
+        
+def save_and_plot(plot=False):
+    path = lidar.path
+    np.savetxt("Examples/"+lidar.path+"/Produced_map.txt",carte,delimiter=',',fmt='%1.1f')
+    lidar.save_carte()
+    np.savetxt("Examples/"+lidar.path+"/Confusion_matrix.txt",confusion,delimiter=',',fmt='%1.1f')
+    
+    if plot==True:
         plt.show()
+
+
 measure = lidar.simulate(show=False)
 lidar.plot_map(show=False)
 
@@ -60,8 +76,17 @@ for i in range(360):
             carte[x][y] -= logodd_free
 
 
+
 plot_produced_map(expit(carte))
 confusion = confusion_matrix(expit(carte), true_carte,save=True)
 np.savetxt("produced_map.txt",carte,delimiter=',',fmt='%1.1f')
 lidar.save_carte()
 np.savetxt("confusion_matrix.txt",confusion,delimiter=',',fmt='%1.1f')
+
+save_and_plot(plot=True)  
+
+
+
+
+
+
