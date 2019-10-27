@@ -8,7 +8,8 @@ A radio remote controlled robot that maps the space around it.
  ```python map.py --dim 100 100 --pos 50 50``` \
  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Produced_map.png" width="425"/>
  
-
+```[python map.py --dim 18 34 --pos 8 8```\
+<img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Produced_map.png" width="425"/>
  
 
 
@@ -48,7 +49,7 @@ This will install all necessery packages
 
 ## Contributing
 
-Please read [CONTRIBUTING](https://github.com/fotisk07/Fourier-Transform/blob/master/CONTRIBUTING) for the process for submitting pull requests.
+Please read [CONTRIBUTING](https://github.com/fotisk07/SI-Project/blob/master/CONTRIBUTING) for the process for submitting pull requests.
 
 ## Authors
 
@@ -56,4 +57,4 @@ Please read [CONTRIBUTING](https://github.com/fotisk07/Fourier-Transform/blob/ma
 * **Fotios Kapotos** - *Initial work*
 * **Mateo Rivera** - *Initial work*
 
-This project is licensed under the MIT License - see the [LICENSE.md]https://github.com/fotisk07/SI-Project/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/fotisk07/SI-Project/blob/master/LICENSE) file for details
