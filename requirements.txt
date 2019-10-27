@@ -3,3 +3,4 @@ matplotlib==2.2.2
 bresenham==0.2.1
 scipy==1.0.1
 mpmath==1.0.0
+scikit-image==0.16.2
