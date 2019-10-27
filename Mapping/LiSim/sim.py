@@ -23,8 +23,6 @@ class Lidar:
         self.carte[:,0]=1
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
-    
-        
         
     
     def make_path(self):

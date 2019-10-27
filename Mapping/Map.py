@@ -9,7 +9,7 @@ from scipy.special import expit
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
-dim = (20,20)
+dim = (12,12)
 pos = (2,5)
 logodd_occ = 0.9
 logodd_free = 0.7
