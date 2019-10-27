@@ -1,12 +1,13 @@
 import numpy as np
 import math as m
 import matplotlib.pyplot as plt
+import os, sys
 plt.style.use('classic')
 
 class Lidar:
     '''Class that defines the Lidar object and comes with the simulation properties needed'''
 
-    def __init__(self,dim=(15,15),angle_step=1, ray_step=1, mu=1,std=0.01,pos=np.array([10,10])):
+    def __init__(self,dim=(15,15),angle_step=1, ray_step=1, mu=1,std=0.01,pos=(10,10)):
         self.dim = dim
         self.angle_step = angle_step
         self.ray_step = ray_step
@@ -15,24 +16,34 @@ class Lidar:
         self.carte = np.zeros(dim)
         self.pos = pos
         self.carte[self.pos[0]][self.pos[1]] = 0.5
-
+        self.path = "dim="+str(dim)+"_pos=" +  str(pos)
+        
         #Map Boundaries and obstacle settings
         self.carte[0][:] = 1
         self.carte[:,0]=1
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
+    
+        
+        
+    
+    def make_path(self):
+        try:
+            os.mkdir("Examples/"+self.path)
+        except:
+            pass
 
-        self.carte[15,:]=1
 
     def plot_map(self,show):
+        real_map = plt.figure("Real Map")
         plt.imshow(self.carte)
         plt.colorbar()
-        plt.savefig("real_map.png")
+        real_map.savefig("Examples/"+self.path+ "/Real_Map.png")
         if show==True:
-            plt.show()
+            real_map.show()
 
     def save_carte(self):
-        np.savetxt("carte.txt", self.carte, delimiter=',',fmt='%1.1f')
+        np.savetxt("Examples/"+self.path+ "/Real_Map.txt", self.carte, delimiter=',',fmt='%1.1f')
 
     def give_carte(self):
         return self.carte
