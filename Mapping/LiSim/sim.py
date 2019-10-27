@@ -17,22 +17,22 @@ class Lidar:
         self.pos = pos
         self.carte[self.pos[0]][self.pos[1]] = 0.5
         self.path = "dim="+str(dim)+"_pos=" +  str(pos)
-        
+
         #Map Boundaries and obstacle settings
         self.carte[0][:] = 1
         self.carte[:,0]=1
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
-        
-    
+
     def make_path(self):
+        '''Create folder to save the different maps'''
         try:
             os.mkdir("Examples/"+self.path)
         except:
             pass
 
-
     def plot_map(self,show):
+        '''Plots and saves the plot of the real map'''
         real_map = plt.figure("Real Map")
         plt.imshow(self.carte)
         plt.colorbar()
@@ -41,6 +41,7 @@ class Lidar:
             real_map.show()
 
     def save_carte(self):
+        '''Saves the real map in the examples directory'''
         np.savetxt("Examples/"+self.path+ "/Real_Map.txt", self.carte, delimiter=',',fmt='%1.1f')
 
     def give_carte(self):

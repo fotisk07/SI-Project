@@ -9,8 +9,8 @@ from scipy.special import expit
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
-dim = (12,12)
-pos = (2,5)
+dim = (65,87)
+pos = (15,20)
 logodd_occ = 0.9
 logodd_free = 0.7
 norm_scale = 5
@@ -43,19 +43,21 @@ def rotation(theta):
     return np.array([[np.cos(m.radians(theta)),-np.sin(m.radians(theta))],[np.sin(m.radians(theta)),np.cos(m.radians(theta))]])
 
 def plot_produced_map(carte,show=False):
+    '''Plots and saves the plot figure of the produced map'''
     produced = plt.figure("Output Map")
     plt.imshow(carte)
     plt.colorbar()
     produced.savefig("Examples/"+lidar.path+"/Produced_map.png")
     if show == True:
         produced.show()
-        
+
 def save_and_plot(plot=False):
+    '''Saves and plots the confusion matrix and the produced map'''
     path = lidar.path
     np.savetxt("Examples/"+lidar.path+"/Produced_map.txt",carte,delimiter=',',fmt='%1.1f')
     lidar.save_carte()
     np.savetxt("Examples/"+lidar.path+"/Confusion_matrix.txt",confusion,delimiter=',',fmt='%1.1f')
-    
+
     if plot==True:
         plt.show()
 
@@ -76,17 +78,6 @@ for i in range(360):
             carte[x][y] -= logodd_free
 
 
-
-plot_produced_map(expit(carte))
-confusion = confusion_matrix(expit(carte), true_carte,save=True)
-np.savetxt("produced_map.txt",carte,delimiter=',',fmt='%1.1f')
-lidar.save_carte()
-np.savetxt("confusion_matrix.txt",confusion,delimiter=',',fmt='%1.1f')
-
-save_and_plot(plot=True)  
-
-
-
-
-
-
+plot_produced_map(expit(carte*norm_scale))
+confusion = confusion_matrix(expit(carte*norm_scale), true_carte,save=True)
+save_and_plot(plot=True)
