@@ -47,25 +47,34 @@ class Lidar:
     def give_carte(self):
         return self.carte
 
-    def noise(self, clean_data):
+    def _noise(self, clean_data, dev, esp=0):
         '''Function that adds noise from a normal distribution to the data provided to mimic real world'''
         data = np.array(clean_data)
-        noise = np.random.normal(self.mu,self.std,[int(360/self.angle_step),2])
+        noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
-
-    def simulate(self, show=False):
+    
+    def simulate(self, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
         data=[]
         if show == True:
             print(self.carte)
         for i in range(int(360/self.angle_step)):
             current_ray = 1
+            theta = i
             while True:
                 x_current = int(m.cos(m.radians(i))*current_ray)
                 y_current = int(m.sin(m.radians(i))*current_ray)
 
                 if self.carte[x_current+self.pos[0]][y_current+self.pos[1]] == 1:
-                    data.append((current_ray , i))
+                    data.append([current_ray, theta])
                     break
                 current_ray += self.ray_step
-        return np.array(data)
+
+        data = np.array(data)
+
+        #Add noise to the data
+        data[:,0] = self._noise(data[:,0], uDist)
+        data[:,1] = self._noise(data[:,1], uTheta)
+
+
+        return data

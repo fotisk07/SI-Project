@@ -13,7 +13,7 @@ dim = (65,87)
 pos = (15,20)
 logodd_occ = 0.9
 logodd_free = 0.7
-norm_scale = 5
+norm_scale = 10
 carte = np.zeros(dim)
 carte[pos[0]][pos[1]] = 1000
 lidar = sim.Lidar(dim=dim,pos=pos)
@@ -65,16 +65,18 @@ def save_and_plot(plot=False):
 measure = lidar.simulate(show=False)
 lidar.plot_map(show=False)
 
-for i in range(360):
+for i in range(len(measure)):
 
     occ = (np.matmul( rotation(measure[i][1]), [measure[i][0],0] ) + pos).astype(int)
 
-    carte[occ[0]][occ[1]] += logodd_occ
+    #If the value is out of range, do nothing here
+    if (0<occ[0]<dim[0]) and (0<occ[1]<dim[1]):
+        carte[occ[0]][occ[1]] += logodd_occ
 
     #Draw a line Lidar <-> Point, and register all points on the line as unoccupied (the lidar would have detected if not)
     points = np.array(list(bresenham(occ[0],occ[1],pos[0],pos[1])))
     for x,y in points:
-        if x!=occ[0] or y!=occ[1]:
+        if (x!=occ[0] or y!=occ[1]) and (0<x<dim[0]) and (0<y<dim[1]):
             carte[x][y] -= logodd_free
 
 
