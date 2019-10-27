@@ -4,6 +4,7 @@ import matplotlib.pyplot as pyplot
 from LiSim import sim
 from bresenham import bresenham
 import matplotlib.pyplot as plt
+from scipy.special import expit
 
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
@@ -18,11 +19,9 @@ carte[pos[0]][pos[1]] = 1000
 lidar = sim.Lidar(dim=dim,pos=pos)
 true_carte = lidar.give_carte()
 
+
 lidar.make_path()
 
-def sigmoid(X):
-    '''Function to normalize the map obtained'''
-    return 1 / (1 + np.exp(-X*norm_scale))
 
 def confusion_matrix(obs,true,show=False,print=False,save=True):
     '''Function that saves and shows the confunsion matrix'''
@@ -77,41 +76,14 @@ for i in range(360):
             carte[x][y] -= logodd_free
 
 
-plot_produced_map(sigmoid(carte),show=False)
-confusion = confusion_matrix(sigmoid(carte), true_carte)
+
+plot_produced_map(expit(carte))
+confusion = confusion_matrix(expit(carte), true_carte,save=True)
+np.savetxt("produced_map.txt",carte,delimiter=',',fmt='%1.1f')
+lidar.save_carte()
+np.savetxt("confusion_matrix.txt",confusion,delimiter=',',fmt='%1.1f')
+
 save_and_plot(plot=True)  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
