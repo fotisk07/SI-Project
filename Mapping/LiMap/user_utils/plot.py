@@ -1,5 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os, sys, errno
+
+np.set_printoptions(precision=3)
+np.set_printoptions(suppress=True)
+plt.style.use('classic')
 
 def plot_and_save_map_out(carte,path,printa=False,show=False,save=True):
     '''Plots, saves the plot, prints and saves the txt numpy array of the produced map'''
@@ -16,7 +21,7 @@ def plot_and_save_map_out(carte,path,printa=False,show=False,save=True):
 
 def confusion_matrix(obs,true,path,show=False,printa=False,save=True):
     '''Plots, saves the plot, prints and saves the txt numpy array of the confusion matrix'''
-    
+
     confusion_matrix = np.square(obs-true)
 
     if printa==True:
@@ -28,5 +33,35 @@ def confusion_matrix(obs,true,path,show=False,printa=False,save=True):
         conf.savefig("Examples/"+path+"/Confusion_matrix.png")
     if show==True:
         conf.show()
-        
+
     return confusion_matrix
+
+_basePath = "Example/default"
+
+def setupPath(path="Example/default"):
+    global _basePath
+    _basePath = path
+    try:
+        os.mkdir(_basePath)
+    except OSError as exc:
+        if exc.errno != errno.EEXIST:
+            raise
+        pass
+
+# TODO: Slugification
+def plotData(data, name, show=False, printa=False, save=True):
+    global _basePath
+
+    if printa==True:
+        print(name+" is:\n", data)
+
+    graph = plt.figure(name)
+    plt.imshow(data)
+    plt.colorbar()
+
+    if save==True:
+        graph.savefig(_basePath+"/"+name+".png")
+    if show==True:
+        graph.show()
+
+    return graph

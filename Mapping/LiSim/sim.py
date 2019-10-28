@@ -2,6 +2,7 @@ import numpy as np
 import math as m
 import matplotlib.pyplot as plt
 import os, sys
+
 plt.style.use('classic')
 
 class Lidar:
@@ -16,7 +17,6 @@ class Lidar:
         self.carte = np.zeros(dim)
         self.pos = pos
         self.carte[self.pos[0]][self.pos[1]] = 0.5
-        self.path = "dim="+str(dim)+"_pos=" +  str(pos)
 
         #Map Boundaries and obstacle settings
         self.carte[0][:] = 1
@@ -24,14 +24,19 @@ class Lidar:
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
 
+        #Create the reference initial working map for LiMap
+        self.initialCarte = np.zeros(dim)
+        self.initialCarte[pos[0]][pos[1]] = 1000
+
+# TODO: Remove uncalled
     def make_path(self):
         '''Create folder to save the different maps'''
         try:
             os.mkdir("Examples/"+self.path)
         except:
             pass
-        return 
-
+        return
+# TODO: Remove uncalled
     def plot_and_save_map_in(self,show=False,printa=False,save=True):
         '''Plots, saves the plot, prints and saves the txt numpy array of the real map'''
         if printa== True:
@@ -53,7 +58,7 @@ class Lidar:
         data = np.array(clean_data)
         noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
-    
+
     def simulate(self,noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
         data=[]
