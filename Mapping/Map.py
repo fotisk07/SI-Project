@@ -8,61 +8,29 @@ from scipy.special import expit
 
 from LiSim import sim
 from map_utils.vector_math import rotation
+from user_utils import plot
 
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
-dim = (65,87)
-pos = (15,20)
+norm_scale = 1000
+
+dim = (20,20)
+pos = (5,5)
+
 logodd_occ = 0.9
 logodd_free = 0.7
-norm_scale = 10
+
 carte = np.zeros(dim)
 carte[pos[0]][pos[1]] = 1000
-lidar = sim.Lidar(dim=dim,pos=pos)
-true_carte = lidar.give_carte()
-
-
-lidar.make_path()
-
-
-def confusion_matrix(obs,true,show=False,print=False,save=True):
-    '''Function that saves and shows the confunsion matrix'''
-    confusion_matrix = np.square(obs-true)
-
-    if show==True:
-        print("The confusion matrix is:\n", confusion_matrix)
-    if save==True:
-        conf = plt.figure("Confusion Matrix")
-        plt.imshow(confusion_matrix)
-        plt.colorbar()
-        conf.savefig("Examples/"+lidar.path+"/Confusion_matrix.png")
-    if print==True:
-        conf.show()
-    return confusion_matrix
-
-def plot_produced_map(carte,show=False):
-    '''Plots and saves the plot figure of the produced map'''
-    produced = plt.figure("Output Map")
-    plt.imshow(carte)
-    plt.colorbar()
-    produced.savefig("Examples/"+lidar.path+"/Produced_map.png")
-    if show == True:
-        produced.show()
-
-def save_and_plot(plot=False):
-    '''Saves and plots the confusion matrix and the produced map'''
-    path = lidar.path
-    np.savetxt("Examples/"+lidar.path+"/Produced_map.txt",carte,delimiter=',',fmt='%1.1f')
-    lidar.save_carte()
-    np.savetxt("Examples/"+lidar.path+"/Confusion_matrix.txt",confusion,delimiter=',',fmt='%1.1f')
-
-    if plot==True:
-        plt.show()
+lidar = sim.Lidar(dim=dim,pos=pos) #Initialize a lidar object
+true_carte = lidar.carte
+lidar.make_path() #make directory to save the examples
+path = lidar.path 
 
 
 measure = lidar.simulate(show=False)
-lidar.plot_map(show=False)
+
 
 for i in range(len(measure)):
 
@@ -79,6 +47,8 @@ for i in range(len(measure)):
             carte[x][y] -= logodd_free
 
 
-plot_produced_map(expit(carte*norm_scale))
-confusion = confusion_matrix(expit(carte*norm_scale), true_carte,save=True)
-save_and_plot(plot=True)
+scaled_carte = expit(carte*norm_scale)
+
+lidar.plot_and_save_map_in(show=True)
+plot.plot_and_save_map_out(scaled_carte,path,show=True)
+confusion = plot.confusion_matrix(scaled_carte, true_carte,path)
