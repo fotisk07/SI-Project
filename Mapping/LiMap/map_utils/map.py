@@ -26,9 +26,15 @@ def processLidarData(measure, previous_map, position, dim):
 
         occ = (np.matmul( rotation(measure[i][1]), [measure[i][0],0] ) + position).astype(int)
 
-        #If the value is out of range, do nothing here
-        if (0<occ[0]<dim[0]) and (0<occ[1]<dim[1]):
-            previous_map[occ[0]][occ[1]] += logodd_occ
+        #Take care of boundaries
+        if occ[0]<0:
+            occ[0] = 0
+        if occ[1]<0:
+            occ[1] = 0
+        if occ[0]>=dim[0]:
+            occ[0] = dim[0]-1
+        if occ[1]>=dim[1]:
+            occ[1] = dim[1]-1
 
         #Draw a line Lidar <-> Point, and register all points on the line as unoccupied (the lidar would have detected if not)
         rr, cc = line(occ[0],occ[1],position[0],position[1])
