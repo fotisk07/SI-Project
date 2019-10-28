@@ -6,6 +6,9 @@ from bresenham import bresenham
 import matplotlib.pyplot as plt
 from scipy.special import expit
 
+from LiSim import sim
+from map_utils.vector_math import rotation
+
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
@@ -37,10 +40,6 @@ def confusion_matrix(obs,true,show=False,print=False,save=True):
     if print==True:
         conf.show()
     return confusion_matrix
-
-def rotation(theta):
-    '''Rotation Matrix for coordinate transformations'''
-    return np.array([[np.cos(m.radians(theta)),-np.sin(m.radians(theta))],[np.sin(m.radians(theta)),np.cos(m.radians(theta))]])
 
 def plot_produced_map(carte,show=False):
     '''Plots and saves the plot figure of the produced map'''
