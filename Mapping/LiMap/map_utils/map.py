@@ -8,12 +8,6 @@ from LiSim import sim
 from LiMap.map_utils.vector_math import rotation
 from LiMap.user_utils import plot
 
-# TODO: WTH should I do with that ?
-np.set_printoptions(precision=3)
-np.set_printoptions(suppress=True)
-plt.style.use('classic')
-norm_scale = 1000
-
 logodd_occ = 0.9
 logodd_free = 0.7
 

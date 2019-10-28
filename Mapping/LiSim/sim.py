@@ -8,12 +8,10 @@ plt.style.use('classic')
 class Lidar:
     '''Class that defines the Lidar object and comes with the simulation properties needed'''
 
-    def __init__(self,dim=(15,15),angle_step=1, ray_step=1, mu=1,std=0.01,pos=(10,10)):
+    def __init__(self,dim=(15,15),angle_step=1, ray_step=1,pos=(10,10)):
         self.dim = dim
         self.angle_step = angle_step
         self.ray_step = ray_step
-        self.mu = mu
-        self.std = std
         self.carte = np.zeros(dim)
         self.pos = pos
         self.carte[self.pos[0]][self.pos[1]] = 0.5
@@ -28,30 +26,6 @@ class Lidar:
         self.initialCarte = np.zeros(dim)
         self.initialCarte[pos[0]][pos[1]] = 1000
 
-# TODO: Remove uncalled
-    def make_path(self):
-        '''Create folder to save the different maps'''
-        try:
-            os.mkdir("Examples/"+self.path)
-        except:
-            pass
-        return
-# TODO: Remove uncalled
-    def plot_and_save_map_in(self,show=False,printa=False,save=True):
-        '''Plots, saves the plot, prints and saves the txt numpy array of the real map'''
-        if printa== True:
-            print("The real map is:\n", self.carte)
-        real_map = plt.figure("Real Map")
-        plt.imshow(self.carte)
-        plt.colorbar()
-        real_map.savefig("Examples/"+self.path+ "/Real_Map.png")
-        np.savetxt("Examples/"+self.path+ "/Real_Map.txt", self.carte, delimiter=',',fmt='%1.1f')
-        if show==True:
-            real_map.show()
-
-
-    def give_carte(self):
-        return self.carte
 
     def _noise(self, clean_data, dev, esp=0):
         '''Function that adds noise from a normal distribution to the data provided to mimic real world'''
