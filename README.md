@@ -8,9 +8,11 @@ A radio remote controlled robot that maps the space around it.
  ```python map.py --dim 100 100 --pos 50 50``` \
  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Produced_map.png" width="425"/>
  
-```[python map.py --dim 18 34 --pos 8 8```\
+```python map.py --dim 18 34 --pos 8 8 ```\
 <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Produced_map.png" width="425"/>
  
+ ```python map.py --dim 30 20 --pos 5 5 --n```\
+ <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Produced_map.png" width="425"/>
 
 
 ## Usage
@@ -22,7 +24,7 @@ A radio remote controlled robot that maps the space around it.
   ``` lidar.simulate()```
 * Running the mapping software, for example
 ```python map.py --dim 10 10 --pos 5 5``` (to be implented)
-
+   * Add noise ```python --dim --pos --n
 
 
 ## Prerequisites
