@@ -30,6 +30,8 @@ def processLidarData(measure, previous_map, position, dim):
         if occ[1]>=dim[1]:
             occ[1] = dim[1]-1
 
+        carte[occ[0]][occ[1]] += logodd_occ
+
         #Draw a line Lidar <-> Point, and register all points on the line as unoccupied (the lidar would have detected if not)
         rr, cc = line(occ[0],occ[1],position[0],position[1])
         for i in range(len(rr)):
