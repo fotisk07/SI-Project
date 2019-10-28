@@ -21,10 +21,7 @@ def createMeasurementSet(
                 counterclockwise=True,
                 center=[0,0],
                 direction=315):
-    """ Base function for measurement sets
-
-
-    """
+    """ Base, general function for measurement sets """
 
 
     #Setup
@@ -55,19 +52,24 @@ def createMeasurementSet(
         transform = dirRotation.dot(speed)
         new_position = lambda pos: pos+transform
     else:
-        print("The shape defaults to static")
+        print("The LiDAR path shape defaults to static")
         new_position = lambda pos: pos
 
     #Create the data
     for f in range(frames):
         #New measurement
-        points.append([[position_cen, angle]])
+        points.append([[position_cen+np.array(center), angle]])
 
         #Increment
         position_cen = new_position(position_cen)
         angle += rotSpeed
+        angle = angle%360
 
-    #Reverting to
     return points
 
-print(createMeasurementSet(frames=4, rotSpeed=1))
+
+def measure_turn(pos, n=1, rSpeed=1):
+    ''' The way the simulation behaves in current versions '''
+
+    f = int((360*n)/rSpeed)
+    return createMeasurementSet(frames=f, rotSpeed= rSpeed, initialPos=pos)
