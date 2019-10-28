@@ -16,7 +16,7 @@ np.set_printoptions(suppress=True)
 plt.style.use('classic')
 norm_scale = 5
 
-dim = (20,20)
+dim = (20,30)
 pos = (5,5)
 
 logodd_occ = 0.9
