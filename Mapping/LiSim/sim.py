@@ -30,19 +30,20 @@ class Lidar:
             os.mkdir("Examples/"+self.path)
         except:
             pass
+        return 
 
-    def plot_map(self,show):
-        '''Plots and saves the plot of the real map'''
+    def plot_and_save_map_in(self,show=False,printa=False,save=True):
+        '''Plots, saves the plot, prints and saves the txt numpy array of the real map'''
+        if printa== True:
+            print("The real map is:\n", self.carte)
         real_map = plt.figure("Real Map")
         plt.imshow(self.carte)
         plt.colorbar()
         real_map.savefig("Examples/"+self.path+ "/Real_Map.png")
+        np.savetxt("Examples/"+self.path+ "/Real_Map.txt", self.carte, delimiter=',',fmt='%1.1f')
         if show==True:
             real_map.show()
 
-    def save_carte(self):
-        '''Saves the real map in the examples directory'''
-        np.savetxt("Examples/"+self.path+ "/Real_Map.txt", self.carte, delimiter=',',fmt='%1.1f')
 
     def give_carte(self):
         return self.carte
@@ -53,7 +54,7 @@ class Lidar:
         noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
     
-    def simulate(self, show=False, uPos=2, uDist=2, uTheta=1.25):
+    def simulate(self,noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
         data=[]
         if show == True:
@@ -71,10 +72,10 @@ class Lidar:
                 current_ray += self.ray_step
 
         data = np.array(data)
-
-        #Add noise to the data
-        data[:,0] = self._noise(data[:,0], uDist)
-        data[:,1] = self._noise(data[:,1], uTheta)
+        if noise == True:
+            #Add noise to the data
+            data[:,0] = self._noise(data[:,0], uDist)
+            data[:,1] = self._noise(data[:,1], uTheta)
 
 
         return data
