@@ -29,7 +29,7 @@ lidar.make_path() #make directory to save the examples
 path = lidar.path 
 
 
-measure = lidar.simulate(show=False)
+measure = lidar.simulate(show=False,noise=False)
 
 
 for i in range(len(measure)):

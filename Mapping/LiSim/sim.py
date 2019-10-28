@@ -54,7 +54,7 @@ class Lidar:
         noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
     
-    def simulate(self, show=False, uPos=2, uDist=2, uTheta=1.25):
+    def simulate(self,noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
         data=[]
         if show == True:
@@ -72,10 +72,10 @@ class Lidar:
                 current_ray += self.ray_step
 
         data = np.array(data)
-
-        #Add noise to the data
-        data[:,0] = self._noise(data[:,0], uDist)
-        data[:,1] = self._noise(data[:,1], uTheta)
+        if noise == True:
+            #Add noise to the data
+            data[:,0] = self._noise(data[:,0], uDist)
+            data[:,1] = self._noise(data[:,1], uTheta)
 
 
         return data
