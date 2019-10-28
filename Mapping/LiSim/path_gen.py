@@ -1,6 +1,10 @@
 from enum import Enum
 import numpy as np
 
+def rotation(theta):
+    '''Rotation Matrix for coordinate transformations'''
+    return np.array([[np.cos(m.radians(theta)),-np.sin(m.radians(theta))],[np.sin(m.radians(theta)),np.cos(m.radians(theta))]])
+
 class PathShape(Enum):
     STATIC = 0
     LINE = 1
