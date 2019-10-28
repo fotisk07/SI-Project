@@ -5,6 +5,7 @@ from LiSim import sim
 from bresenham import bresenham
 import matplotlib.pyplot as plt
 from scipy.special import expit
+from skimage.draw import line
 
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
@@ -74,8 +75,10 @@ for i in range(len(measure)):
         carte[occ[0]][occ[1]] += logodd_occ
 
     #Draw a line Lidar <-> Point, and register all points on the line as unoccupied (the lidar would have detected if not)
-    points = np.array(list(bresenham(occ[0],occ[1],pos[0],pos[1])))
-    for x,y in points:
+    rr, cc = line(occ[0],occ[1],pos[0],pos[1])
+    for i in range(len(rr)):
+        x = rr[i]
+        y = cc[i]
         if (x!=occ[0] or y!=occ[1]) and (0<x<dim[0]) and (0<y<dim[1]):
             carte[x][y] -= logodd_free
 
