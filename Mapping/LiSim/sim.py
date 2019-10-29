@@ -33,27 +33,31 @@ class Lidar:
         noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
 
-    def simulate(self,noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
-        '''Simulates data from one complete lidar rotation'''
-        data=[]
-        
-        for i in range(int(360/self.angle_step)):
+    def simulate(self, points, noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
+        '''Simulates data from one complete lidar rotation, the points parameter is
+        a list representing a discretized version of the path and the laser orientation
+        of the LiDAR over time '''
+
+        simulated = []
+
+        for i in range(len(data)):
             current_ray = 1
-            theta = i
+            theta = points[i][1]
+            pos = points[i][0]
             while True:
                 x_current = int(m.cos(m.radians(i))*current_ray)
                 y_current = int(m.sin(m.radians(i))*current_ray)
 
-                if self.carte[x_current+self.pos[0]][y_current+self.pos[1]] == 1:
-                    data.append([current_ray, theta])
+                if self.carte[x_current+pos[0]][y_current+pos[1]] == 1:
+                    simulated.append([current_ray, theta])
                     break
                 current_ray += self.ray_step
 
-        data = np.array(data)
+        simulated = np.array(simulated)
         if noise == True:
             #Add noise to the data
-            data[:,0] = self._noise(data[:,0], uDist)
-            data[:,1] = self._noise(data[:,1], uTheta)
+            simulated[:,0] = self._noise(simulated[:,0], uDist)
+            simulated[:,1] = self._noise(simulated[:,1], uTheta)
 
 
-        return data
+        return simulated
