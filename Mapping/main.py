@@ -32,9 +32,7 @@ plot.setupPath(path)
 #Setup save file paths for the animation
 animate_path = "Animate/dim="+str(dim)+"_pos=" +  str(pos)
 plot.setupPath(animate_path)
-
-
-input()
+open('Animate/frames.txt', 'w+').close()
 for i in range(turns):
     # Simulate measurement and feed them into LiMap
     simMeasure = lidar.simulate(show=False,noise=False)
@@ -50,5 +48,3 @@ confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
 plot.plotData(confusion, "Confusion-Matrix",path)
 plot.plotData(true_carte, "Real-Map",path)
 plot.plotData(scaled_carte, "Produced-Map",path)
-
-
