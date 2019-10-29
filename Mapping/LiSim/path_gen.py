@@ -79,23 +79,29 @@ def measure_turn(pos, n=1, rSpeed=1):
     return createMeasurementSet(frames=f, rotSpeed= rSpeed, initialPos=pos)
 
 class Scheduler:
-    def __init__(self, points, maxBatchSize=3):
+    def __init__(self, points, maxBatchSize=None):
         self.points = points
         self.index = 0
         self.maxIndex = len(points)-1
         self.complete = False
 
+        self.maxBatchSize = maxBatchSize
+
     def getNextBatch():
-        batchSize = np.random.randInt(1, maxBatchSize+1)
+        if (self.maxBatchSize == None):
+            batchSize = len(points)
+        else:
+            batchSize = np.random.randInt(1, self.maxBatchSize)
+
         batch = []
 
-        if (self.index+batchSize)>=self.maxIndex:
+        if (self.index+batchSize-1)>self.maxIndex:
             # TODO: Raise exception if complete already true
             self.complete = True
             batchSize = self.maxIndex-self.index
 
         for k in range(batchSize):
-            batch.append(self.points[k+self.index])
+            batch.append(self.points[k+self.index-1])
 
         self.index += batchSize
 
