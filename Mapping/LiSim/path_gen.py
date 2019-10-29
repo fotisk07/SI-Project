@@ -62,7 +62,7 @@ def createMeasurementSet(
     #Create the data
     for f in range(frames):
         #New measurement
-        points.append([[position_cen+np.array(center), angle]])
+        points.append([position_cen+np.array(center), angle])
 
         #Increment
         position_cen = new_position(position_cen)
