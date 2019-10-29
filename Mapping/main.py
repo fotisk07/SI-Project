@@ -46,3 +46,5 @@ plot.plotData(true_carte, "Real-Map")
 
 # plot.plot_and_save_map_out(scaled_carte,path,show=True)
 plot.plotData(scaled_carte, "Produced-Map")
+
+plt.show()
