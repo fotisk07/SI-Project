@@ -33,19 +33,19 @@ class Lidar:
         noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
 
-    def simulate(self,noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
+    def simulate(self, data, noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
-        data=[]
-        if show == True:
-            print(self.carte)
-        for i in range(int(360/self.angle_step)):
+
+        for i in range(len(data)):
+
             current_ray = 1
-            theta = i
+            theta = data[i][1]
+            pos = data[i][0]
             while True:
                 x_current = int(m.cos(m.radians(i))*current_ray)
                 y_current = int(m.sin(m.radians(i))*current_ray)
 
-                if self.carte[x_current+self.pos[0]][y_current+self.pos[1]] == 1:
+                if self.carte[x_current+pos[0]][y_current+pos[1]] == 1:
                     data.append([current_ray, theta])
                     break
                 current_ray += self.ray_step
