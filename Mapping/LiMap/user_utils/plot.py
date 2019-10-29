@@ -19,7 +19,7 @@ def setupPath(path="Example/default"):
         pass
 
 # TODO: Slugification
-def plotData(data, name, show=False, printa=False, save=True):
+def plotData(data, name,path, show=False, printa=False, save=True):
     global _basePath
 
     if printa==True:
@@ -30,7 +30,7 @@ def plotData(data, name, show=False, printa=False, save=True):
     plt.colorbar()
 
     if save==True:
-        graph.savefig(_basePath+"/"+name+".png")
+        graph.savefig(path+"/"+name+".png")
     if show==True:
         graph.show()
 
