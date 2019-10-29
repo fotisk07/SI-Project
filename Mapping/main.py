@@ -33,11 +33,14 @@ plot.setupPath(path)
 animate_path = "Animate/dim="+str(dim)+"_pos=" +  str(pos)
 plot.setupPath(animate_path)
 open('Animate/frames.txt', 'w+').close()
+open('produced_map.txt', 'w+').close()
+input()
+
 for i in range(turns):
     # Simulate measurement and feed them into LiMap
-    simMeasure = lidar.simulate(show=False,noise=False)
+    simMeasure = lidar.simulate(show=False,noise=True,uPos=10)
     carte = map.processLidarData(simMeasure, carte, pos, dim)
-    frames.make_frame(carte)
+    frames.make_frame(expit(carte))
     #plot.plotData(expit(carte), "Produced-Map{}".format(i),animate_path)
 
 #Process the data
