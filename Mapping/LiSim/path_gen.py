@@ -91,17 +91,17 @@ class Scheduler:
         if (self.maxBatchSize == None):
             batchSize = len(points)
         else:
-            batchSize = np.random.randInt(1, self.maxBatchSize)
+            batchSize = np.random.randInt(1, self.maxBatchSize+1)
 
         batch = []
 
-        if (self.index+batchSize-1)>self.maxIndex:
+        if (self.index+batchSize)>=self.maxIndex:
             # TODO: Raise exception if complete already true
             self.complete = True
-            batchSize = self.maxIndex-self.index
+            batchSize = self.maxIndex-self.index+1
 
         for k in range(batchSize):
-            batch.append(self.points[k+self.index-1])
+            batch.append(self.points[k+self.index])
 
         self.index += batchSize
 
