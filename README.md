@@ -51,7 +51,7 @@ This will install all necessery packages
 
 ## Contributing
 
-Please read [CONTRIBUTING](https://github.com/fotisk07/SI-Project/blob/master/CONTRIBUTING) for the process for submitting pull requests.
+Please read [CONTRIBUTING](https://github.com/fotisk07/SI-Project/blob/master/CONTRIBUTING.md) for the process for submitting pull requests.
 
 ## Secuirity
 
