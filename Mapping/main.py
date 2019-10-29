@@ -22,7 +22,7 @@ true_carte = lidar.carte
 carte = lidar.initialCarte
 
 
-# Setup save paths for the simulation
+# Setup save file paths for the simulation
 path = "dim="+str(dim)+"_pos=" +  str(pos)
 # lidar.make_path()
 plot.setupPath("Examples/"+path)
@@ -38,13 +38,8 @@ scaled_carte = expit(carte*norm_scale)
 confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
 
 #Plot the data, old functions in comment
-# plot.confusion_matrix(scaled_carte, true_carte,path)
 plot.plotData(confusion, "Confusion-Matrix")
-
-# lidar.plot_and_save_map_in(show=True)
 plot.plotData(true_carte, "Real-Map")
-
-# plot.plot_and_save_map_out(scaled_carte,path,show=True)
 plot.plotData(scaled_carte, "Produced-Map")
 
 plt.show()
