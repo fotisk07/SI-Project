@@ -28,9 +28,16 @@ path = "dim="+str(dim)+"_pos=" +  str(pos)
 plot.setupPath("Examples/"+path)
 
 
-# Simulate measurement and feed them into LiMap
+# Simulate measurement and schedule them them into LiMap
 simMeasure = lidar.simulate(show=False,noise=False)
-carte = map.processLidarData(simMeasure, carte, pos, dim)
+sched = Scheduler(simMeasure)
+
+while sched.complete==False:
+    #Process the batch
+    carte = map.processLidarData(sched.getNextBatch(), carte, pos, dim)
+
+    #Redraw
+    plot.draw()
 
 
 #Process the data
