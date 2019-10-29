@@ -36,6 +36,8 @@ class Lidar:
     def simulate(self, data, noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
 
+        simulated = []
+
         for i in range(len(data)):
 
             current_ray = 1
@@ -46,15 +48,15 @@ class Lidar:
                 y_current = int(m.sin(m.radians(i))*current_ray)
 
                 if self.carte[x_current+pos[0]][y_current+pos[1]] == 1:
-                    data.append([current_ray, theta])
+                    simulated.append([current_ray, theta])
                     break
                 current_ray += self.ray_step
 
-        data = np.array(data)
+        simulated = np.array(simulated)
         if noise == True:
             #Add noise to the data
-            data[:,0] = self._noise(data[:,0], uDist)
-            data[:,1] = self._noise(data[:,1], uTheta)
+            simulated[:,0] = self._noise(simulated[:,0], uDist)
+            simulated[:,1] = self._noise(simulated[:,1], uTheta)
 
 
-        return data
+        return simulated
