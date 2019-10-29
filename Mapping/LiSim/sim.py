@@ -35,7 +35,8 @@ class Lidar:
 
     def simulate(self, points, noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation, the points parameter is
-        a list of the desired measure points '''
+        a list representing a discretized version of the path and the laser orientation
+        of the LiDAR over time '''
 
         simulated = []
 
