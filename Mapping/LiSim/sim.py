@@ -2,21 +2,19 @@ import numpy as np
 import math as m
 import matplotlib.pyplot as plt
 import os, sys
+
 plt.style.use('classic')
 
 class Lidar:
     '''Class that defines the Lidar object and comes with the simulation properties needed'''
 
-    def __init__(self,dim=(15,15),angle_step=1, ray_step=1, mu=1,std=0.01,pos=(10,10)):
+    def __init__(self,dim=(15,15),angle_step=1, ray_step=1,pos=(10,10)):
         self.dim = dim
         self.angle_step = angle_step
         self.ray_step = ray_step
-        self.mu = mu
-        self.std = std
         self.carte = np.zeros(dim)
         self.pos = pos
         self.carte[self.pos[0]][self.pos[1]] = 0.5
-        self.path = "dim="+str(dim)+"_pos=" +  str(pos)
 
         #Map Boundaries and obstacle settings
         self.carte[0][:] = 1
@@ -24,36 +22,17 @@ class Lidar:
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
 
-    def make_path(self):
-        '''Create folder to save the different maps'''
-        try:
-            os.mkdir("Examples/"+self.path)
-        except:
-            pass
-        return 
+        #Create the reference initial working map for LiMap
+        self.initialCarte = np.zeros(dim)
+        self.initialCarte[pos[0]][pos[1]] = 1000
 
-    def plot_and_save_map_in(self,show=False,printa=False,save=True):
-        '''Plots, saves the plot, prints and saves the txt numpy array of the real map'''
-        if printa== True:
-            print("The real map is:\n", self.carte)
-        real_map = plt.figure("Real Map")
-        plt.imshow(self.carte)
-        plt.colorbar()
-        real_map.savefig("Examples/"+self.path+ "/Real_Map.png")
-        np.savetxt("Examples/"+self.path+ "/Real_Map.txt", self.carte, delimiter=',',fmt='%1.1f')
-        if show==True:
-            real_map.show()
-
-
-    def give_carte(self):
-        return self.carte
 
     def _noise(self, clean_data, dev, esp=0):
         '''Function that adds noise from a normal distribution to the data provided to mimic real world'''
         data = np.array(clean_data)
         noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
-    
+
     def simulate(self,noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
         data=[]
