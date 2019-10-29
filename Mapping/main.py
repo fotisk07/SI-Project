@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 from LiSim import sim
 from LiSim import simResultProcess as prc
+from LiSim import path_gen as gen
 from LiMap.map_utils import map
 from LiMap.user_utils import plot
 
@@ -27,9 +28,11 @@ path = "dim="+str(dim)+"_pos=" +  str(pos)
 # lidar.make_path()
 plot.setupPath("Examples/"+path)
 
+#Generate the data points where the measurements must be made
+measure_points = gen.measure_turn(pos, 1)
 
 # Simulate measurement and feed them into LiMap
-simMeasure = lidar.simulate(show=False,noise=False)
+simMeasure = lidar.simulate(data=measure_points,show=False,noise=False)
 carte = map.processLidarData(simMeasure, carte, pos, dim)
 
 
