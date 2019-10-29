@@ -36,8 +36,7 @@ class Lidar:
     def simulate(self,noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
         '''Simulates data from one complete lidar rotation'''
         data=[]
-        if show == True:
-            print(self.carte)
+        
         for i in range(int(360/self.angle_step)):
             current_ray = 1
             theta = i
