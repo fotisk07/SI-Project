@@ -26,7 +26,7 @@ A radio remote controlled robot that maps the space around it.
 ```python map.py --dim 10 10 --pos 5 5``` (to be implented)
    * Add noise ```python --dim --pos --n
 
-
+ 
 ## Prerequisites
 
 The Code is written in Python 3.6.5 . If you don't have Python installed you can find it [here](https://www.python.org/downloads/). If you are using a lower version of Python you can upgrade using the pip package, ensuring you have the latest version of pip.
