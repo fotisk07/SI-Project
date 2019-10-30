@@ -48,12 +48,24 @@ parser.add_argument("position",
     type=int
 )
 
+parser.add_argument("-n", "--noise",
+    help="""\
+        Add this option if you wish to add noise to the
+    simulated data.
+    """,
+    action="store_true"
+)
+
+args = parser.parse_args()
+
+dim = tuple(args.dimensions)
+pos = tuple(args.position)
+isNoisy = args.noise
+
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
-dim = tuple(parser.dimensions)
-pos = tuple(parser.position)
 
 norm_scale = 5
 
@@ -72,7 +84,7 @@ plot.setupPath("Examples/"+path)
 measure_points = gen.measure_turn(pos, 1)
 
 # Simulate measurement and feed them into LiMap
-simMeasure = lidar.simulate(data=measure_points,show=False,noise=False)
+simMeasure = lidar.simulate(data=measure_points,show=False,noise=isNoisy)
 carte = map.processLidarData(simMeasure, carte, pos, dim)
 
 
