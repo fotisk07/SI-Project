@@ -27,18 +27,6 @@ frames.make_frame(carte)
 # Setup save file paths for the simulation
 path = "Examples/dim="+str(dim)+"_pos=" +  str(pos)
 # lidar.make_path()
-
-plot.setupPath("Examples/"+path)
-
-
-# Simulate measurement and schedule them them into LiMap
-simMeasure = lidar.simulate(show=False,noise=False)
-sched = Scheduler(simMeasure)
-
-while sched.complete==False:
-    #Process the batch
-    carte = map.processLidarData(sched.getNextBatch(), carte, pos, dim)
-
 plot.setupPath(path)
 
 #Setup save file paths for the animation
@@ -55,10 +43,6 @@ for i in range(turns):
     frames.make_frame(expit(carte))
     #plot.plotData(expit(carte), "Produced-Map{}".format(i),animate_path)
 
-    #Redraw here
-
-
-## Remove this when redraw implemented
 #Process the data
 scaled_carte = expit(carte*norm_scale)
 confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
