@@ -5,13 +5,13 @@ A radio remote controlled robot that maps the space around it.
 
 ## Exemples
 
- ```python map.py --dim 100 100 --pos 50 50``` \
+ ```python map.py --d 100 100 --p 50 50``` \
  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Produced_map.png" width="425"/>
  
-```python map.py --dim 18 34 --pos 8 8 ```\
+```python map.py --d 18 34 --p 8 8 ```\
 <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Produced_map.png" width="425"/>
  
- ```python map.py --dim 30 20 --pos 5 5 --n```\
+ ```python map.py --d 30 20 --p 5 5 --n```\
  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Produced_map.png" width="425"/>
 
 
@@ -23,8 +23,8 @@ A radio remote controlled robot that maps the space around it.
   * Using the functions of the Lidar Object
   ``` lidar.simulate()```
 * Running the mapping software, for example
-```python map.py --dim 10 10 --pos 5 5``` (to be implented)
-   * Add noise ```python --dim --pos --n
+```python map.py --d 10 10 --p 5 5``` 
+   * Add noise ```python --d --p --n
 
  
 ## Prerequisites
@@ -61,6 +61,7 @@ all the necesserary details [here](https://github.com/fotisk07/SI-Project/blob/m
 ## Authors
 
 * **Alexander Flammant** - *Initial work*
+* **Theodore Halley** - *Initial work*
 * **Fotios Kapotos** - *Initial work*
 * **Mateo Rivera** - *Initial work*
 
