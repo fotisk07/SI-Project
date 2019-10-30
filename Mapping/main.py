@@ -30,17 +30,19 @@ parser = parse.ArgumentParser(
             Alexander Flamant
             Mateo Rivera
      """)
-parser.add_argument("dimensions",
+parser.add_argument("-d","--dimensions",
     nargs=2,
     help="""\
         This should be the x y size of the map.
     ex: "10 10"
     """,
+    required=True,
     type=int
 )
 
-parser.add_argument("position",
+parser.add_argument("-p","--position",
     nargs=2,
+    required=True
     help="""\
         This should be the starting x y coordinates of
     the LiDAR separated with a space. ex: "5 5"
