@@ -36,10 +36,10 @@ while sched.complete==False:
     #Process the batch
     carte = map.processLidarData(sched.getNextBatch(), carte, pos, dim)
 
-    #Redraw
-    plot.draw()
+    #Redraw here
 
 
+## Remove this when redraw implemented
 #Process the data
 scaled_carte = expit(carte*norm_scale)
 confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
