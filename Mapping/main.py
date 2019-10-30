@@ -8,8 +8,9 @@ from LiSim import simResultProcess as prc
 from LiSim import path_gen as gen
 from LiMap.map_utils import map
 from LiMap.user_utils import plot
+import argparse
 
-parser = parse.ArgumentParser(
+parser = argparse.ArgumentParser(
     description=''' \
     A program that simulates LiDAR measurements
     ---------------------------------------------------
@@ -19,7 +20,7 @@ parser = parse.ArgumentParser(
     simulations purposes.
         ''',
 
-    formatter_class=parse.RawDescriptionHelpFormatter,
+    formatter_class=argparse.RawDescriptionHelpFormatter,
     epilog="""\
     ---------------------------------------------------
         This software is released under the MIT license
@@ -42,7 +43,7 @@ parser.add_argument("-d","--dimensions",
 
 parser.add_argument("-p","--position",
     nargs=2,
-    required=True
+    required=True,
     help="""\
         This should be the starting x y coordinates of
     the LiDAR separated with a space. ex: "5 5"
@@ -86,7 +87,7 @@ plot.setupPath("Examples/"+path)
 measure_points = gen.measure_turn(pos, 1)
 
 # Simulate measurement and feed them into LiMap
-simMeasure = lidar.simulate(data=measure_points,show=False,noise=isNoisy)
+simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
 carte = map.processLidarData(simMeasure, carte, pos, dim)
 
 

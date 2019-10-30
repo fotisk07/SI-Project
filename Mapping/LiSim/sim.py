@@ -40,7 +40,7 @@ class Lidar:
 
         simulated = []
 
-        for i in range(len(data)):
+        for i in range(len(points)):
             current_ray = 1
             theta = points[i][1]
             pos = points[i][0]
