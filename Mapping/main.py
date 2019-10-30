@@ -9,12 +9,52 @@ from LiSim import path_gen as gen
 from LiMap.map_utils import map
 from LiMap.user_utils import plot
 
+parser = parse.ArgumentParser(
+    description=''' \
+    A program that simulates LiDAR measurements
+    ---------------------------------------------------
+        The simulated measurements are then processed.
+        The program uses the LiMap utility for mapping
+    and the LiSim (which is dependent on LiMap) for all
+    simulations purposes.
+        ''',
+
+    formatter_class=parse.RawDescriptionHelpFormatter,
+    epilog="""\
+    ---------------------------------------------------
+        This software is released under the MIT license
+    (more details in LICENSE.md)
+
+        Initial work:
+            Fotios Kapotos
+            Alexander Flamant
+            Mateo Rivera
+     """)
+parser.add_argument("dimensions",
+    nargs=2,
+    help="""\
+        This should be the x y size of the map.
+    ex: "10 10"
+    """,
+    type=int
+)
+
+parser.add_argument("position",
+    nargs=2,
+    help="""\
+        This should be the starting x y coordinates of
+    the LiDAR separated with a space. ex: "5 5"
+    """,
+    type=int
+)
+
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
-dim = (20,20)
-pos = (5,5)
+dim = tuple(parser.dimensions)
+pos = tuple(parser.position)
+
 norm_scale = 5
 
 #Initialize and get base info from LiSim
