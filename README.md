@@ -24,7 +24,7 @@ A radio remote controlled robot that maps the space around it.
   ``` lidar.simulate()```
 * Running the mapping software, for example
 ```python map.py --d 10 10 --p 5 5``` 
-   * Add noise ```python --d --p --n
+   * Add noise ```python --d --p --n 
 
  
 ## Prerequisites
