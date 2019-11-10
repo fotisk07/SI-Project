@@ -58,12 +58,20 @@ parser.add_argument("-n", "--noise",
     """,
     action="store_true"
 )
+parser.add_argument("-s", "--save",
+    help="""\
+        Add this option if you wish to save your files in a dedicated folder in
+        examples or just the default
+    """,
+    action="store_true"
+)
 
 args = parser.parse_args()
 
 dim = tuple(args.dimensions)
 pos = tuple(args.position)
 isNoisy = args.noise
+changeEx = args.save
 
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
@@ -79,8 +87,11 @@ carte = lidar.initialCarte
 
 
 # Setup save file paths for the simulation
-path = "Examples/dim="+str(dim)+"_pos=" +  str(pos)
-plot.setuprootPath(path)
+if changeEx:
+    path = "Examples/dim="+str(dim)+"_pos=" +  str(pos)
+    plot.setuprootPath(path)
+else:
+    plot.setuprootPath()
 
 #Generate the data points where the measurements must be made
 measure_points =np.array(gen.measure_turn(pos, 1))
