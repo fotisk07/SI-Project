@@ -39,11 +39,10 @@ class Lidar:
         of the LiDAR over time '''
 
         simulated = []
-
-        for i in range(len(points)):
+        for i in range(len(points)-1):
             current_ray = 1
-            theta = points[i][1]
-            pos = points[i][0]
+            theta = points[i][0][1]
+            pos = points[i][0][0]
             while True:
                 x_current = int(m.cos(m.radians(i))*current_ray)
                 y_current = int(m.sin(m.radians(i))*current_ray)

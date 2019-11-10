@@ -62,7 +62,7 @@ def createMeasurementSet(
     #Create the data
     for f in range(frames):
         #New measurement
-        points.append([position_cen+np.array(center), angle])
+        points.append([[position_cen+np.array(center), angle]])
 
         #Increment
         position_cen = new_position(position_cen)
@@ -77,3 +77,32 @@ def measure_turn(pos, n=1, rSpeed=1):
 
     f = int((360*n)/rSpeed)
     return createMeasurementSet(frames=f, rotSpeed= rSpeed, initialPos=pos)
+
+class Scheduler:
+    def __init__(self, points, maxBatchSize=None):
+        self.points = points
+        self.index = 0
+        self.maxIndex = len(points)-1
+        self.complete = False
+
+        self.maxBatchSize = maxBatchSize
+
+    def getNextBatch(self):
+        if (self.maxBatchSize == None):
+            batchSize = len(points)
+        else:
+            batchSize = np.random.randInt(1, self.maxBatchSize+1)
+
+        batch = []
+
+        if (self.index+batchSize)>=self.maxIndex:
+            # TODO: Raise exception if complete already true
+            self.complete = True
+            batchSize = self.maxIndex-self.index+1
+
+        for k in range(batchSize):
+            batch.append(self.points[k+self.index])
+
+        self.index += batchSize
+
+        return batch
