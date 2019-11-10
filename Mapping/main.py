@@ -103,7 +103,7 @@ while True:
     carte = map.processLidarData(simMeasure, carte, pos, dim)
 
     if i%FPT:
-        plot.animate(expit(carte))
+        plot.animate(expit(carte),pos)
 
     i+=1
 

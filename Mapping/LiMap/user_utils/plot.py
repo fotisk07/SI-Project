@@ -6,6 +6,7 @@ np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
+
 _basePath = "Examples/default"
 
 def setuprootPath(path="Examples/default"):
@@ -44,6 +45,10 @@ def plotData(data, name, show=False, printa=False, save=True,path="" ):
 
     return graph
 
-def animate(image):
+def animate(image,center_coordinates):
+    radius = 20
+    color = (255, 0, 0)
+    thickness = 2
+    image = cv2.circle(image, center_coordinates, 1, color, thickness) 
     cv2.imshow("produced_carte", image)
     cv2.waitKey(20)
