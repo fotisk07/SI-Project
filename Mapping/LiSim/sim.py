@@ -21,7 +21,7 @@ class Lidar:
         self.carte[:,0]=1
         self.carte[dim[0]-1][:]=1
         self.carte[:,dim[1]-1]=1
-
+        
         #Create the reference initial working map for LiMap
         self.initialCarte = np.zeros(dim)
         self.initialCarte[pos[0]][pos[1]] = 1000

@@ -2,6 +2,8 @@
 from scipy.special import expit
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
+from cv2 import VideoWriter, VideoWriter_fourcc
 
 from LiSim import sim
 from LiSim import simResultProcess as prc
@@ -66,25 +68,31 @@ parser.add_argument("-s", "--save",
     action="store_true"
 )
 
+parser.add_argument("-ani", "--animate",
+    help="""\
+        Add this option if you wish to display the mapping in an animated mode
+    """,
+    action="store_true"
+)
 args = parser.parse_args()
-
 dim = tuple(args.dimensions)
 pos = tuple(args.position)
 isNoisy = args.noise
 changeEx = args.save
+animate = args.animate
 
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
 
-norm_scale = 0.002 #Map Scaling variable
-FPT = 5 #How many times the map will be update before plotted
+norm_scale = 1 #Map Scaling variable
+plot_scale = 255 #Animation scaling
+FPT = 1 #How many times the map will be update before plotted
 #Initialize and get base info from LiSim
 lidar = sim.Lidar(dim=dim,pos=pos)
 true_carte = lidar.carte
 carte = lidar.initialCarte
-
 
 # Setup save file paths for the simulation
 if changeEx:
@@ -101,18 +109,23 @@ while True:
     # Simulate measurement and feed them into LiMap
     simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
     carte = map.processLidarData(simMeasure, carte, pos, dim)
+    if animate:
+        if i%FPT==0:
+            frame = plot_scale*expit(norm_scale*carte)
+            plot.animate(frame,pos)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+            
+        i+=1
+    else:
+        break
 
-    if i%FPT:
-        plot.animate(expit(carte),pos)
-
-    i+=1
-
-
+cv2.destroyAllWindows()
 #Process the data
 scaled_carte = expit(carte*norm_scale)
 confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
 
-#Plot the data, old functions in comment
+#Plot the data
 plot.plotData(confusion, "Confusion-Matrix")
 plot.plotData(true_carte, "Real-Map")
 plot.plotData(scaled_carte, "Produced-Map")

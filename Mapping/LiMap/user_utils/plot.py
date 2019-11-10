@@ -5,8 +5,9 @@ import cv2
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
-
-
+import cv2
+from cv2 import VideoWriter, VideoWriter_fourcc
+plt.show(block=True)
 _basePath = "Examples/default"
 
 def setuprootPath(path="Examples/default"):
@@ -28,7 +29,7 @@ def setupPath(path="Examples/default"):
         pass
 
 # TODO: Slugification
-def plotData(data, name, show=False, printa=False, save=True,path="" ):
+def plotData(data, name, show=False, printa=False, save=True,path=""):
     if path=="":
         path = _basePath
     if printa==True:
@@ -41,7 +42,7 @@ def plotData(data, name, show=False, printa=False, save=True,path="" ):
     if save==True:
         graph.savefig(path+"/"+name+".png")
     if show==True:
-        graph.show()
+        plt.show()
 
     return graph
 
@@ -49,6 +50,8 @@ def animate(image,center_coordinates):
     radius = 20
     color = (255, 0, 0)
     thickness = 2
-    image = cv2.circle(image, center_coordinates, 1, color, thickness) 
+    
+    image = cv2.circle(image, center_coordinates, 1, color, thickness)
     cv2.imshow("produced_carte", image)
     cv2.waitKey(20)
+   
