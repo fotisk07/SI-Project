@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os, sys, errno
-
+import cv2
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
@@ -43,3 +43,7 @@ def plotData(data, name, show=False, printa=False, save=True,path="" ):
         graph.show()
 
     return graph
+
+def animate(image):
+    cv2.imshow("produced_carte", image)
+    cv2.waitKey(20)

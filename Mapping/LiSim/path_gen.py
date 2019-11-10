@@ -56,7 +56,7 @@ def createMeasurementSet(
         transform = dirRotation.dot(speed)
         new_position = lambda pos: pos+transform
     else:
-        print("The LiDAR path shape defaults to static")
+        #print("The LiDAR path shape defaults to static")
         new_position = lambda pos: pos
 
     #Create the data

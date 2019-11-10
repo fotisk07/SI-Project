@@ -78,8 +78,8 @@ np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
 
-norm_scale = 5
-
+norm_scale = 0.002 #Map Scaling variable
+FPT = 5 #How many times the map will be update before plotted
 #Initialize and get base info from LiSim
 lidar = sim.Lidar(dim=dim,pos=pos)
 true_carte = lidar.carte
@@ -93,13 +93,19 @@ if changeEx:
 else:
     plot.setuprootPath()
 
-#Generate the data points where the measurements must be made
-measure_points =np.array(gen.measure_turn(pos, 1))
+i=0
+while True:
+    #Generate the data points where the measurements must be made
+    measure_points =np.array(gen.measure_turn(pos, 1))
 
+    # Simulate measurement and feed them into LiMap
+    simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
+    carte = map.processLidarData(simMeasure, carte, pos, dim)
 
-# Simulate measurement and feed them into LiMap
-simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
-carte = map.processLidarData(simMeasure, carte, pos, dim)
+    if i%FPT:
+        plot.animate(expit(carte))
+
+    i+=1
 
 
 #Process the data
