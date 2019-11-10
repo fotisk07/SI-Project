@@ -80,8 +80,7 @@ carte = lidar.initialCarte
 
 # Setup save file paths for the simulation
 path = "dim="+str(dim)+"_pos=" +  str(pos)
-# lidar.make_path()
-plot.setupPath("Examples/"+path)
+plot.setuprootPath(path)
 
 #Generate the data points where the measurements must be made
 measure_points = gen.measure_turn(pos, 1)

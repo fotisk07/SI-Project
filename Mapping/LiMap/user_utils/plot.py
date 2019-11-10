@@ -6,9 +6,9 @@ np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
-_basePath = "Example/default"
+_basePath = "Examples/default"
 
-def setupPath(path="Example/default"):
+def setuprootPath(path="Examples/default"):
     global _basePath
     _basePath = path
     try:
@@ -18,10 +18,18 @@ def setupPath(path="Example/default"):
             raise
         pass
 
-# TODO: Slugification
-def plotData(data, name, show=False, printa=False, save=True):
-    global _basePath
+def setupPath(path="Examples/default"):
+    try:
+        os.mkdir(path)
+    except OSError as exc:
+        if exc.errno != errno.EEXIST:
+            raise
+        pass
 
+# TODO: Slugification
+def plotData(data, name, show=False, printa=False, save=True,path="" ):
+    if path=="":
+        path = _basePath
     if printa==True:
         print(name+" is:\n", data)
 
@@ -30,7 +38,7 @@ def plotData(data, name, show=False, printa=False, save=True):
     plt.colorbar()
 
     if save==True:
-        graph.savefig(_basePath+"/"+name+".png")
+        graph.savefig(path+"/"+name+".png")
     if show==True:
         graph.show()
 
