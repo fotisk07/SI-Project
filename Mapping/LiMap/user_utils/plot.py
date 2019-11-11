@@ -36,7 +36,7 @@ def plotData(data, name, show=False, printa=False, save=True,path=""):
         print(name+" is:\n", data)
 
     graph = plt.figure(name)
-    plt.imshow(data)
+    plt.imshow(data,cmap='jet')
     plt.colorbar()
 
     if save==True:
