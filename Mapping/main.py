@@ -74,13 +74,19 @@ parser.add_argument("-ani", "--animate",
     """,
     action="store_true"
 )
+parser.add_argument("-crazy", "--crazy",
+    help="""\
+        Add this option if you wish to display the mapping in an animated mode
+    """,
+    action="store_true"
+)
 args = parser.parse_args()
 dim = tuple(args.dimensions)
 pos = tuple(args.position)
 isNoisy = args.noise
 changeEx = args.save
 animate = args.animate
-
+isCrazy = args.crazy
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
@@ -107,7 +113,7 @@ while True:
     measure_points =np.array(gen.measure_turn(pos, 1))
 
     # Simulate measurement and feed them into LiMap
-    simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
+    simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy,isCrazy=isCrazy)
     carte = map.processLidarData(simMeasure, carte, pos, dim)
     if animate:
         if i%FPT==0:
