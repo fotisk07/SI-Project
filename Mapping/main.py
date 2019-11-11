@@ -86,7 +86,7 @@ np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
 
-norm_scale = 5 #Map Scaling variable
+norm_scale = 0.2 #Map Scaling variable
 plot_scale = 255 #Animation scaling
 FPT = 1 #How many times the map will be update before plotted
 #Initialize and get base info from LiSim
