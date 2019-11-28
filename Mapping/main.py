@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 from cv2 import VideoWriter, VideoWriter_fourcc
+import time
 
 from LiSim import sim
 from LiSim import simResultProcess as prc
@@ -27,7 +28,6 @@ parser = argparse.ArgumentParser(
     ---------------------------------------------------
         This software is released under the MIT license
     (more details in LICENSE.md)
-
         Initial work:
             Fotios Kapotos
             Alexander Flamant
@@ -86,7 +86,7 @@ np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
 
-norm_scale = 0.005 #Map Scaling variable
+norm_scale = 0.01 #Map Scaling variable
 plot_scale = 255 #Animation scaling
 FPT = 1 #How many times the map will be update before plotted
 #Initialize and get base info from LiSim
@@ -102,7 +102,10 @@ else:
     plot.setuprootPath()
 
 i=0
+start = time.time()
 while True:
+    
+    
     #Generate the data points where the measurements must be made
     measure_points =np.array(gen.measure_turn(pos, 1))
 
@@ -117,9 +120,11 @@ while True:
                 break
             
         i+=1
+    
     else:
         break
-
+elapsed_time = time.time()-start
+print(i/elapsed_time)
 cv2.destroyAllWindows()
 #Process the data
 scaled_carte = expit(carte*norm_scale)
