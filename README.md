@@ -9,14 +9,13 @@ A radio remote controlled robot that maps the space around it.
  <p align="center">
   <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/ezgif.com-video-to-gif.gif" width="300" height="300" />
 </p>
-<p align="center" >
-<img align="left" src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Real-Map.png" width="425"/>
-<img align="right" src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Produced-Map.png" width="425"/>
+ <p float="left">
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Real-Map.png" width="200" />
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Produced-Map.png" width="200" /> 
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Confusion-Matrix.png" width="200" />
+ <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/loss.png" width="200" />
 </p>
-<p>
-<img align="left" src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Confusion-Matrix.png" width="425"/>  
-<img align="right" src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/loss.png" width="425"/>
-</p>
+ 
 
 ## Prerequisites
 
