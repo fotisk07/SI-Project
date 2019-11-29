@@ -44,14 +44,15 @@ This will install all necessery packages
 The program runs using [Simulate](https://github.com/fotisk07/SI-Project/blob/master/Mapping/Simulate.py) which relies on the use of LiMap and LiSim for the simulation
 * Basic Usage ```python simulate.py ```  
 Runs the Mapping procedure for one round
-  - Plot and save the graphs(loss,real map, produced map, confusion matrix) ath the default dir  
+  - Plot and save the graphs(loss,real map, produced map, confusion matrix) at the default dir  
   with ```python simulate.py -g```
   - Add noise with ```python simulate.py -n```
   - Animate it with ```python simulate.py --ani```
   - Specify dimensions with ```python simulate.py -d 10 10  ```
   - Specifiy position with ```python simulate.py -p 5 5 ```
   - Save stats for nerds with ```python simulate.py -stats```
-  - Change saving directory to "dim,pos"
+  - Change saving directory to "dim,pos" ```python simulate.py -s```
+  - Save the animation in a .avi file ```python simulate.py -video```
 * Example of advanced usage:  
 ```
 python simulate.py -d 50 50 -p 10 10 -n -ani -stats -g
