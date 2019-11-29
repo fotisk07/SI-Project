@@ -39,20 +39,16 @@ parser.add_argument("-d","--dimensions",
         This should be the x y size of the map.
     ex: "10 10"
     """,
-    required=True,
     type=int
 )
-
 parser.add_argument("-p","--position",
     nargs=2,
-    required=True,
     help="""\
         This should be the starting x y coordinates of
     the LiDAR separated with a space. ex: "5 5"
     """,
     type=int
 )
-
 parser.add_argument("-n", "--noise",
     help="""\
         Add this option if you wish to add noise to the
@@ -67,72 +63,118 @@ parser.add_argument("-s", "--save",
     """,
     action="store_true"
 )
-
 parser.add_argument("-ani", "--animate",
     help="""\
         Add this option if you wish to display the mapping in an animated mode
     """,
     action="store_true"
 )
+parser.add_argument("-g", "--graphs",
+    help="""\
+        Add this option if you want to display the finished graphs and the loss evolution
+    """,
+    action="store_true"
+)
+parser.add_argument("-stats", "--stats",
+    help="""\
+        Add this option if you want to save a txt file with all the parameters
+    """,
+    action="store_true"
+)
+
 args = parser.parse_args()
 dim = tuple(args.dimensions)
 pos = tuple(args.position)
 isNoisy = args.noise
 changeEx = args.save
 animate = args.animate
+graphs = args.graphs
+stats = args.stats
 
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 plt.style.use('classic')
 
-
 norm_scale = 0.01 #Map Scaling variable
-plot_scale = 255 #Animation scaling
 FPT = 1 #How many times the map will be update before plotted
+logloss = []
+tours_count=0
+
 #Initialize and get base info from LiSim
-lidar = sim.Lidar(dim=dim,pos=pos)
+try:
+    lidar = sim.Lidar(dim=dim,pos=pos)
+except:
+    lidar = sim.Lidar()
 true_carte = lidar.carte
 carte = lidar.initialCarte
+
 
 # Setup save file paths for the simulation
 if changeEx:
     path = "Examples/dim="+str(dim)+"_pos=" +  str(pos)
     plot.setuprootPath(path)
 else:
+    path = "Examples/default"
     plot.setuprootPath()
 
-i=0
-start = time.time()
+
+start = time.time() #start the clock
 while True:
-    
-    
     #Generate the data points where the measurements must be made
     measure_points =np.array(gen.measure_turn(pos, 1))
-
-    # Simulate measurement and feed them into LiMap
+    # Simulate measurement
     simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
+    #Update carte
     carte = map.processLidarData(simMeasure, carte, pos, dim)
     if animate:
-        if i%FPT==0:
-            frame = plot_scale*expit(norm_scale*carte)
-            plot.animate(frame,pos)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-            
-        i+=1
-    
+        #Convert carte in 0-1 format
+        scaled_carte = expit(carte*norm_scale)
+        #Animate
+        plot.animate(scaled_carte,pos,"Produced Carte")
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        #Generate confusion matrix and logloss
+        confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
+        logloss.append(prc.loss(confusion,dim))
+        tours_count+=1
     else:
+        graphs=True
         break
-elapsed_time = time.time()-start
-print(i/elapsed_time)
+
 cv2.destroyAllWindows()
-#Process the data
-scaled_carte = expit(carte*norm_scale)
-confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
+animation_time = time.time()-start # Measure running time
+
+print("FPS:", tours_count/animation_time)
+print("Nombre de tours:",tours_count)
 
 #Plot the data
-plot.plotData(confusion, "Confusion-Matrix")
-plot.plotData(true_carte, "Real-Map")
-plot.plotData(scaled_carte, "Produced-Map")
+if graphs == True:
+    scaled_carte = expit(carte*norm_scale)
+    confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
+    plot.plot_loss(logloss,tours_count)
+    plot.plotData(confusion,"Confusion-Matrix",pos)
+    plot.plotData(true_carte,"Real-Map",pos)
+    plot.plotData(scaled_carte,"Produced-Map",pos)
+    plt.show()
 
-plt.show()
+if stats == True:
+    stats_for_nerds = {
+    "Dimensions" : dim,
+    "Position" : pos,
+    "Noise" : isNoisy,
+    "uPos": lidar.uPos,
+    "uDist": lidar.uDist,
+    "uTheta": lidar.uTheta,
+    "Angle_step": lidar.angle_step,
+    "Ray_step": lidar.ray_step ,
+    "Norm Scale": norm_scale,
+    "FPT": FPT,
+    "Last logloss": logloss[-1],
+    "Tours Count": tours_count,
+    "FPS" :tours_count/animation_time,
+    "Animation Runtime(s)": animation_time
+    }
+
+    f = open(path+"/stats for nerds.txt","w")
+    f.write(str(stats_for_nerds) )
+    f.close()

@@ -1,0 +1,1 @@
+{'Dimensions': (50, 50), 'Position': (25, 25), 'Noise': False, 'uPos': 2, 'uDist': 2, 'uTheta': 1.25, 'Angle_step': 1, 'Ray_step': 1, 'Norm Scale': 0.01, 'FPT': 1, 'Last logloss': 0.3414216567525026, 'Tours Count': 47, 'FPS': 14.4680627075682, 'Animation Runtime(s)': 3.2485344409942627}

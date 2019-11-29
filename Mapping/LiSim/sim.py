@@ -8,23 +8,25 @@ plt.style.use('classic')
 class Lidar:
     '''Class that defines the Lidar object and comes with the simulation properties needed'''
 
-    def __init__(self,dim=(15,15),angle_step=1, ray_step=1,pos=(10,10)):
+    def __init__(self,dim=(15,15),angle_step=1, ray_step=1,pos=(10,10),uPos=2,uDist=2,uTheta=1.25):
         self.dim = dim
         self.angle_step = angle_step
         self.ray_step = ray_step
         self.carte = np.zeros(dim)
         self.pos = pos
-        self.carte[self.pos[0]][self.pos[1]] = 0.5
+        self.uPos = uPos
+        self.uDist = uDist
+        self.uTheta = uTheta
 
         #Map Boundaries and obstacle settings
         self.carte[0][:] = 1
         self.carte[:,0] = 1
         self.carte[dim[1]-1][:] = 1
         self.carte[:,dim[1]-1] = 1
-        
+
         #Create the reference initial working map for LiMap
         self.initialCarte = np.zeros(dim)
-        self.initialCarte[pos[0]][pos[1]] = 1000
+
 
 
     def _noise(self, clean_data, dev, esp=0):
@@ -33,7 +35,7 @@ class Lidar:
         noise = np.random.normal(esp,dev,clean_data.shape)
         return noise+clean_data
 
-    def simulate(self, points, noise=True, show=False, uPos=2, uDist=2, uTheta=1.25):
+    def simulate(self, points, noise=True, show=False):
         '''Simulates data from one complete lidar rotation, the points parameter is
         a list representing a discretized version of the path and the laser orientation
         of the LiDAR over time '''
@@ -55,8 +57,8 @@ class Lidar:
         simulated = np.array(simulated)
         if noise == True:
             #Add noise to the data
-            simulated[:,0] = self._noise(simulated[:,0], uDist)
-            simulated[:,1] = self._noise(simulated[:,1], uTheta)
+            simulated[:,0] = self._noise(simulated[:,0], self.uDist)
+            simulated[:,1] = self._noise(simulated[:,1], self.uTheta)
 
 
         return simulated
