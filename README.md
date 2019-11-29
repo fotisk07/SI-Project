@@ -3,16 +3,16 @@
 ## Introduction
 A radio remote controlled robot that maps the space around it.
 
-## Exemples
+## Exemple
 
- ```python map.py --d 100 100 --p 50 50``` \
- <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Produced_map.png" width="425"/>
+ ```python simulate.py -d 50 50 -p 25 25 -n -ani -g``` \
+ <p align="center">
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/ezgif.com-video-to-gif.gif" width="300" height="300" />
+</p>
+<img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Real-Map.png" width="425"/><img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Produced-Map.png" width="425"/>
+<img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Confusion-Matrix.png" width="425"/>
+<img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/loss.png" width="425"/>
  
-```python map.py --d 18 34 --p 8 8 ```\
-<img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Produced_map.png" width="425"/>
- 
- ```python map.py --d 30 20 --p 5 5 --n```\
- <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Produced_map.png" width="425"/>
 
 ## Prerequisites
 
