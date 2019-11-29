@@ -13,6 +13,9 @@ from LiMap.map_utils import map
 from LiMap.user_utils import plot
 import argparse
 
+np.set_printoptions(precision=3)
+np.set_printoptions(suppress=True)
+
 parser = argparse.ArgumentParser(
     description=''' \
     A program that simulates LiDAR measurements
@@ -81,8 +84,14 @@ parser.add_argument("-stats", "--stats",
     """,
     action="store_true"
 )
-
+parser.add_argument("-video", "--video",
+    help="""\
+        Add this option if you want to save an avi file with the animation
+    """,
+    action="store_true"
+)
 args = parser.parse_args()
+
 dim = tuple(args.dimensions)
 pos = tuple(args.position)
 isNoisy = args.noise
@@ -90,21 +99,20 @@ changeEx = args.save
 animate = args.animate
 graphs = args.graphs
 stats = args.stats
-
-np.set_printoptions(precision=3)
-np.set_printoptions(suppress=True)
-plt.style.use('classic')
+video = args.video
 
 norm_scale = 0.01 #Map Scaling variable
 FPT = 1 #How many times the map will be update before plotted
 logloss = []
 tours_count=0
 
+
 #Initialize and get base info from LiSim
 try:
     lidar = sim.Lidar(dim=dim,pos=pos)
 except:
     lidar = sim.Lidar()
+
 true_carte = lidar.carte
 carte = lidar.initialCarte
 
@@ -143,9 +151,9 @@ while True:
 
 cv2.destroyAllWindows()
 animation_time = time.time()-start # Measure running time
-
 print("FPS:", tours_count/animation_time)
 print("Nombre de tours:",tours_count)
+
 
 #Plot the data
 if graphs == True:
@@ -178,3 +186,6 @@ if stats == True:
     f = open(path+"/stats for nerds.txt","w")
     f.write(str(stats_for_nerds) )
     f.close()
+
+if video == True:
+    plot.create_video(path)
