@@ -53,6 +53,7 @@ Runs the Mapping procedure for one round
   - Save stats for nerds with ```python simulate.py -stats```
   - Change saving directory to "dim,pos" ```python simulate.py -s```
   - Save the animation in a .avi file ```python simulate.py -video```
+  - Use a weighted confusion matrix ```python simulate.py -rl```
 * Example of advanced usage:  
 ```
 python simulate.py -d 50 50 -p 10 10 -n -ani -stats -g
