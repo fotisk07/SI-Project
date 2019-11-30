@@ -83,7 +83,7 @@ def animate(image,center_coordinates,name):
     frames.append(image)
     cv2.waitKey(20)
 
-def create_video(path)
+def create_video(path):
     global frames
     if path=="":
         path = _basePath

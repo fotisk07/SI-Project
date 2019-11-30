@@ -91,9 +91,11 @@ parser.add_argument("-video", "--video",
     action="store_true"
 )
 args = parser.parse_args()
-
-dim = tuple(args.dimensions)
-pos = tuple(args.position)
+try:
+    dim = tuple(args.dimensions)
+    pos = tuple(args.position)
+except:
+    pass
 isNoisy = args.noise
 changeEx = args.save
 animate = args.animate
@@ -103,7 +105,7 @@ video = args.video
 
 norm_scale = 0.01 #Map Scaling variable
 FPT = 1 #How many times the map will be update before plotted
-logloss = []
+logloss = [] #Logloss list for plotting
 tours_count=0
 
 
@@ -119,7 +121,7 @@ carte = lidar.initialCarte
 
 # Setup save file paths for the simulation
 if changeEx:
-    path = "Examples/dim="+str(dim)+"_pos=" +  str(pos)
+    path = "Examples/dim="+str(dim)+"_pos=" +  str(lidar.pos)
     plot.setuprootPath(path)
 else:
     path = "Examples/default"
@@ -128,27 +130,29 @@ else:
 
 start = time.time() #start the clock
 while True:
+    tours_count+=1
     #Generate the data points where the measurements must be made
-    measure_points =np.array(gen.measure_turn(pos, 1))
+    measure_points =np.array(gen.measure_turn(lidar.pos, 1))
     # Simulate measurement
     simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
     #Update carte
-    carte = map.processLidarData(simMeasure, carte, pos, dim)
+    carte = map.processLidarData(simMeasure, carte, lidar.pos, lidar.dim)
     if animate:
         #Convert carte in 0-1 format
         scaled_carte = expit(carte*norm_scale)
         #Animate
-        plot.animate(scaled_carte,pos,"Produced Carte")
+        plot.animate(scaled_carte,lidar.pos,"Produced Carte")
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         #Generate confusion matrix and logloss
         confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
-        logloss.append(prc.loss(confusion,dim))
-        tours_count+=1
+        logloss.append(prc.loss(confusion,lidar.dim))
     else:
+        scaled_carte = expit(carte*norm_scale*100)
         graphs=True
         break
-
+    
+print(np.shape(logloss))
 cv2.destroyAllWindows()
 animation_time = time.time()-start # Measure running time
 print("FPS:", tours_count/animation_time)
@@ -157,18 +161,20 @@ print("Nombre de tours:",tours_count)
 
 #Plot the data
 if graphs == True:
-    scaled_carte = expit(carte*norm_scale)
     confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
-    plot.plot_loss(logloss,tours_count)
-    plot.plotData(confusion,"Confusion-Matrix",pos)
-    plot.plotData(true_carte,"Real-Map",pos)
-    plot.plotData(scaled_carte,"Produced-Map",pos)
+    plot.plotData(confusion,"Confusion-Matrix",lidar.pos)
+    plot.plotData(true_carte,"Real-Map",lidar.pos)
+    plot.plotData(scaled_carte,"Produced-Map",lidar.pos)
+    if animate == True:
+        plot.plot_loss(logloss,tours_count-1)
+    else:
+        print("Loss",prc.loss(confusion,lidar.dim))
     plt.show()
 
 if stats == True:
     stats_for_nerds = {
-    "Dimensions" : dim,
-    "Position" : pos,
+    "Dimensions" : lidar.dim,
+    "Position" : lidar.pos,
     "Noise" : isNoisy,
     "uPos": lidar.uPos,
     "uDist": lidar.uDist,
@@ -187,5 +193,5 @@ if stats == True:
     f.write(str(stats_for_nerds) )
     f.close()
 
-if video == True:
+if video == True and animate==True:
     plot.create_video(path)

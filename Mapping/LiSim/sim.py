@@ -8,7 +8,7 @@ plt.style.use('classic')
 class Lidar:
     '''Class that defines the Lidar object and comes with the simulation properties needed'''
 
-    def __init__(self,dim=(15,15),angle_step=1, ray_step=1,pos=(10,10),uPos=2,uDist=2,uTheta=1.25):
+    def __init__(self,dim=(50,50),angle_step=1, ray_step=1,pos=(25,25),uPos=2,uDist=2,uTheta=1.25):
         self.dim = dim
         self.angle_step = angle_step
         self.ray_step = ray_step
