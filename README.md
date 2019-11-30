@@ -3,16 +3,19 @@
 ## Introduction
 A radio remote controlled robot that maps the space around it.
 
-## Exemples
+## Exemple
 
- ```python map.py --d 100 100 --p 50 50``` \
- <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(100%2C%20100)_pos%3D(50%2C%2050)/Produced_map.png" width="425"/>
+ ```python simulate.py -d 50 50 -p 25 25 -n -ani -g``` 
+ <p align="center">
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/ezgif.com-video-to-gif.gif" width="300" height="300" />
+</p>
+ <p float="center">
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Real-Map.png" width="400" />
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Produced-Map.png" width="400"/> 
+  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Confusion-Matrix.png" width="400"/>
+ <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/loss.png" width="400" />
+</p>
  
-```python map.py --d 18 34 --p 8 8 ```\
-<img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(18%2C%2034)_pos%3D(8%2C%208)/Produced_map.png" width="425"/>
- 
- ```python map.py --d 30 20 --p 5 5 --n```\
- <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Real_Map.png" width="425"/> <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(20%2C%2030)_pos%3D(5%2C%205)/Produced_map.png" width="425"/>
 
 ## Prerequisites
 
@@ -41,19 +44,20 @@ This will install all necessery packages
 The program runs using [Simulate](https://github.com/fotisk07/SI-Project/blob/master/Mapping/Simulate.py) which relies on the use of LiMap and LiSim for the simulation
 * Basic Usage ```python simulate.py ```  
 Runs the Mapping procedure for one round
-  - Plot and save the graphs(loss,real map, produced map, confusion matrix) ath the default dir  
+  - Plot and save the graphs(loss,real map, produced map, confusion matrix) at the default dir  
   with ```python simulate.py -g```
   - Add noise with ```python simulate.py -n```
   - Animate it with ```python simulate.py --ani```
   - Specify dimensions with ```python simulate.py -d 10 10  ```
   - Specifiy position with ```python simulate.py -p 5 5 ```
   - Save stats for nerds with ```python simulate.py -stats```
-  - Change saving directory to "dim,pos"
+  - Change saving directory to "dim,pos" ```python simulate.py -s```
+  - Save the animation in a .avi file ```python simulate.py -video```
 * Example of advanced usage:  
 ```
 python simulate.py -d 50 50 -p 10 10 -n -ani -stats -g
 ```
-The first picture is the above command executed
+The example above is the above command executed
    
 ## Contributing
 
