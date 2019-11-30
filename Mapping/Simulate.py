@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import cv2
 from cv2 import VideoWriter, VideoWriter_fourcc
 import time
-
+import sys
 from LiSim import sim
 from LiSim import simResultProcess as prc
 from LiSim import path_gen as gen
@@ -90,6 +90,12 @@ parser.add_argument("-video", "--video",
     """,
     action="store_true"
 )
+parser.add_argument("-rl", "--relativeLoss",
+    help="""\
+        Add this option if you want to save an avi file with the animation
+    """,
+    action="store_true"
+)
 args = parser.parse_args()
 try:
     dim = tuple(args.dimensions)
@@ -102,6 +108,7 @@ animate = args.animate
 graphs = args.graphs
 stats = args.stats
 video = args.video
+relativeLoss = args.relativeLoss
 
 norm_scale = 0.01 #Map Scaling variable
 FPT = 1 #How many times the map will be update before plotted
@@ -145,23 +152,20 @@ while True:
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         #Generate confusion matrix and logloss
-        confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
+        confusion = prc.genConfusionMatrix(scaled_carte, true_carte, lidar.pos, relativeLoss)
         logloss.append(prc.loss(confusion,lidar.dim))
     else:
         scaled_carte = expit(carte*norm_scale*100)
         graphs=True
         break
-    
-print(np.shape(logloss))
+
 cv2.destroyAllWindows()
 animation_time = time.time()-start # Measure running time
 print("FPS:", tours_count/animation_time)
 print("Nombre de tours:",tours_count)
-
-
 #Plot the data
 if graphs == True:
-    confusion = prc.genConfusionMatrix(scaled_carte, true_carte)
+    confusion = prc.genConfusionMatrix(scaled_carte, true_carte,lidar.pos,relativeLoss)
     plot.plotData(confusion,"Confusion-Matrix",lidar.pos)
     plot.plotData(true_carte,"Real-Map",lidar.pos)
     plot.plotData(scaled_carte,"Produced-Map",lidar.pos)
