@@ -2,14 +2,13 @@
 import numpy as np
 from numpy.linalg import inv
 
-x_observations = np.array([4000, 4860, 4000, 4810, 5110])
-v_observations = np.array([280, 282, 289, 286, 290])
+x_observations = np.array([4000, 4860, 4000, 4810, 5110,100,120,120,120])
+v_observations = np.array([280, 282, 289, 286, 290,20,20,20,20])
 
 z = np.c_[x_observations, v_observations]
-print(np.shape(z))
 # Initial Conditions
-a = 2  # Acceleration
-v = 280
+a = 0  # Acceleration
+v = 0
 t = 1  # Difference in time
 
 # Process / Estimation Errors
@@ -49,7 +48,7 @@ X = np.array([[z[0][0]],
               [v]])
 n = len(z[0])
 
-for data in z[1:3]:
+for data in z:
     print(data)
     X = prediction2d(X[0][0], X[1][0], t, a)
     # To simplify the problem, professor

@@ -2,7 +2,7 @@ import numpy as np
 
 def accelerometre(t):
   c = 0
-  a = 5
+  a = 1
   return t*a + c
 
 def gyroscope(t):
