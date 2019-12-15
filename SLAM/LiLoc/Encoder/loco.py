@@ -1,9 +1,8 @@
-
 import numpy as np
 from numpy.linalg import inv
 
-x_observations = np.array([4000, 4860, 4000, 4810, 5110,100,120,120,120])
-v_observations = np.array([280, 282, 289, 286, 290,20,20,20,20])
+x_observations = np.array([4000])
+v_observations = np.array([280])
 
 z = np.c_[x_observations, v_observations]
 print(np.shape(z))
@@ -48,9 +47,8 @@ A = np.array([[1, t],
 X = np.array([[z[0][0]],
               [v]])
 n = len(z[0])
-
+print()
 for data in z:
-    print(data)
     X = prediction2d(X[0][0], X[1][0], t, a)
     # To simplify the problem, professor
     # set off-diagonal terms to 0.

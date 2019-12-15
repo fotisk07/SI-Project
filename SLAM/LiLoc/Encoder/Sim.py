@@ -1,5 +1,4 @@
 import numpy as np
-import math as m
 
 class Encoder():
 
@@ -12,10 +11,11 @@ class Encoder():
 
     def getTicks(self,t):
         '''Assuming constant acceleration'''
-        newPos = self.startPos + self.velocity*t + 1/2*self.acceleration*t**2
-        tics = int(newPos / 2*m.pi*self.wheelRadius) * self.ticsTours
+        newPos = self.distance(t)
+        tics = (int((newPos-self.startPos) / (2*np.pi*self.wheelRadius))+1) * self.ticsTours
         return tics
 
     def distance(self,t):
-        newPos = self.startPos + self.velocity*t + 1/2*self.acceleration*t^2
+        newPos = self.startPos + self.velocity*t + 1/2*self.acceleration*t**2
+
         return newPos
