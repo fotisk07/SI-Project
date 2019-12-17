@@ -76,4 +76,7 @@ all the necesserary details [here](https://github.com/fotisk07/SI-Project/blob/m
 * **Fotios Kapotos** - *Initial work*
 * **Mateo Rivera** - *Initial work*
 
+Special thanks to [James Teow](https://medium.com/@jaems33). We use his algorithm for our Kalman Filtering implementation
+
+
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/fotisk07/SI-Project/blob/master/LICENSE) file for details

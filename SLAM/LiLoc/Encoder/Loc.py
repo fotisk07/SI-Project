@@ -6,6 +6,9 @@ from numpy.linalg import inv
 import plot_utils as plot
 import matplotlib.pyplot as plt
 
+
+
+#Credits to https://medium.com/@jaems33/understanding-kalman-filters-with-python-2310e87b8f48 for the implementation of the KF algorithm
 ticksTours = 10
 velocity = 1
 acceleration = 0

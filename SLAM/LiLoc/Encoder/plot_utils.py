@@ -12,9 +12,9 @@ def plotData(true,predicted,measured,kf,  t, dt, name, yAxis,start=0,):
     plt.ylabel(yAxis)
     plt.plot(0,start,'o',color = "black")
 
-    t = plt.plot(x, true, color="blue", label="True")
-    p = plt.plot(x, predicted, color="red", label="Predicted")
-    m = plt.plot(x, measured, color="magenta", label="Measured")
-    k = plt.plot(x, kf, color="green", label="KF")
+    plt.plot(x, true, color="blue", label="True")
+    plt.plot(x, predicted, color="red", label="Predicted")
+    plt.plot(x, measured, color="magenta", label="Measured")
+    plt.plot(x, kf, color="green", label="KF")
     plt.legend()
     graph.savefig(name+".png")
