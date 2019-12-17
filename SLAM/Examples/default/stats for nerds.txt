@@ -1,1 +1,1 @@
-{'Dimensions': (50, 50), 'Position': (25, 25), 'Noise': False, 'uPos': 2, 'uDist': 2, 'uTheta': 1.25, 'Angle_step': 1, 'Ray_step': 1, 'Norm Scale': 0.01, 'FPT': 1, 'Last logloss': 0.3414216567525026, 'Tours Count': 47, 'FPS': 14.4680627075682, 'Animation Runtime(s)': 3.2485344409942627}
+{'Dimensions': (50, 50), 'Position': (25, 25), 'Noise': False, 'uPos': 2, 'uDist': 2, 'uTheta': 1.25, 'Angle_step': 1, 'Ray_step': 1, 'Norm Scale': 0.01, 'FPT': 1, 'Last logloss': 0.6204350194613216, 'Tours Count': 21, 'FPS': 13.457302128255108, 'Animation Runtime(s)': 1.5604910850524902}
