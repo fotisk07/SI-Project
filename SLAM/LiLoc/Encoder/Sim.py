@@ -5,7 +5,7 @@ class Encoder():
 
     def __init__(self,ticsTours,velocity,acceleration,startPos):
         self.ticsTours = ticsTours
-        self.velocity = velocity
+        self.startvelocity = velocity
         self.acceleration = acceleration
         self.startPos = startPos
         self.wheelRadius = 0.1
@@ -23,7 +23,7 @@ class Encoder():
         return tics
 
     def distance(self,t):
-        return self.startPos + self.velocity*t + 1/2*self.acceleration*(t**2)
+        return self.startPos + self.startvelocity*t + 1/2*self.acceleration*(t**2)
 
     def vel(self,t):
-        return self.acceleration*t + self.velocity
+        return self.acceleration*t + self.startvelocity
