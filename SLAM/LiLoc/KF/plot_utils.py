@@ -4,7 +4,7 @@ import seaborn as sns
 import pandas as pd
 plt.style.use('seaborn')
 
-def plotData(true,predicted,measured,kf,  t, dt, name, yAxis,start=0,):
+def plotData(true,predicted,measured,kf, t, dt, name, yAxis,start=0,save=False):
     graph = plt.figure(name)
 
     x = np.arange(1,t,dt)
@@ -17,4 +17,5 @@ def plotData(true,predicted,measured,kf,  t, dt, name, yAxis,start=0,):
     plt.plot(x, measured, color="magenta", label="Measured")
     plt.plot(x, kf, color="green", label="KF")
     plt.legend()
-    graph.savefig(name+".png")
+    if save:
+        graph.savefig(name+".png")

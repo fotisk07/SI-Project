@@ -11,10 +11,10 @@ import matplotlib.pyplot as plt
 #Credits to https://medium.com/@jaems33/understanding-kalman-filters-with-python-2310e87b8f48 for the implementation of the KF algorithm
 ticksTours = 10
 velocity = 1
-acceleration = 0
-startPos = 20
-enc = sim.Encoder(ticksTours,velocity,acceleration,startPos)
-t = 100
+startPos = 1
+a=10
+enc = sim.Encoder(ticksTours,velocity,a,startPos)
+t = 21
 dt = 1
 X = np.array([[startPos],
               [velocity]])
@@ -31,8 +31,8 @@ error_est_x = 5
 error_est_v = 1
 
 # Observation Errors
-error_obs_x = 15  # Uncertainty in the measurement
-error_obs_v = 50
+error_obs_x = 5  # Uncertainty in the measurement
+error_obs_v = 1
 
 
 def prediction2d(x, v, t, a):
@@ -60,16 +60,15 @@ A = np.array([[1, dt],
 for i in range(1,t,dt):
     #Plotting utils
     trueStateP[0][i-1] = enc.distance(i)
-    trueStateP[1][i-1] = enc.vel(trueStateP[0][i-1], i)
+    trueStateP[1][i-1] = enc.vel(i)
 
     ticks = enc.getTicks(i,noise=True)
     X_encoder[0] = tu.ticks_to_dist(ticks,ticksTours,startPos)
-    X_encoder[1] = tu.ticks_to_v(X_encoder[0],i,startPos)
+    X_encoder[1] = tu.ticks_to_v(X_encoder[0]-measuredStateP[0][i-2],dt)
     measuredStateP[0][i-1]=X_encoder[0]
     measuredStateP[1][i-1]=X_encoder[1]
     n = len(X_encoder)
-
-    X = prediction2d(X[0][0], X[1][0], dt, a=0)
+    X = prediction2d(X[0][0], X[1][0], dt, a)
     predictedStateP[0][i-1] = X[0][0]
     predictedStateP[1][i-1] = X[1][0]
     # To simplify the problem, professor
@@ -78,9 +77,10 @@ for i in range(1,t,dt):
 
     # Calculating the Kalman Gain
     H = np.identity(n)
-    R = covariance2d(error_obs_x, error_obs_v)
+    R = covariance2d(error_obs_x, error_obs_v) #Error of the measurement
     S = H.dot(P).dot(H.T) + R
     K = P.dot(H).dot(inv(S))
+    print(K)
 
     # Reshape the new data into the measurement space.
     Y = H.dot(X_encoder).reshape(n, -1)
@@ -93,8 +93,10 @@ for i in range(1,t,dt):
     # Update Process Covariance Matrix
     P = (np.identity(len(K)) - K.dot(H)).dot(P)
 
-print("Final State:\n",X)
-print(measuredStateP)
+#print("Final State:\n",X)
+
+
+
 plot.plotData(trueStateP[0][:],predictedStateP[0][:], measuredStateP[:][0],KFstate[0][:], t, dt,"Position Inference","Position" , start = startPos)
 plot.plotData(trueStateP[1][:],predictedStateP[1][:], measuredStateP[:][1],KFstate[1][:], t, dt,"Velocity Inference","Velocity" , start = velocity)
 plt.show()

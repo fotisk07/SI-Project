@@ -23,12 +23,7 @@ class Encoder():
         return tics
 
     def distance(self,t):
-        newPos = self.startPos + self.velocity*t + 1/2*self.acceleration*t**2
-        return newPos
+        return self.startPos + self.velocity*t + 1/2*self.acceleration*(t**2)
 
-    def vel(self,distance,t):
-        try:
-            v = (self.distance(t)-self.startPos) / t
-        except:
-            return 0
-        return v
+    def vel(self,t):
+        return self.acceleration*t + self.velocity
