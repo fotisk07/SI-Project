@@ -31,8 +31,8 @@ startPos = 2
 startV = 4
 a=0
 startTheta = 0
-startThetadot = 90
-thetadotdot = 0
+startThetadot = 20
+thetadotdot = 5
 
 M = np.array([0,0,0,0])
 X = np.array([[startPos],
