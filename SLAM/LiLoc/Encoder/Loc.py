@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 
 #Credits to https://medium.com/@jaems33/understanding-kalman-filters-with-python-2310e87b8f48 for the implementation of the KF algorithm
 ticksTours = 10
-velocity = 1
-startPos = 1
-a=10
+velocity = 3
+startPos = 2
+a=0
 enc = sim.Encoder(ticksTours,velocity,a,startPos)
 t = 21
 dt = 1
@@ -22,6 +22,7 @@ X = np.array([[startPos],
 trueStateP = np.zeros((2,t-1))
 predictedStateP = np.zeros((2,t-1))
 measuredStateP = np.zeros((2,t-1))
+measuredStateP[0][-1] = startPos 
 KFstate = np.zeros((2,t-1))
 
 X_encoder = np.array([0,0])
@@ -63,6 +64,7 @@ for i in range(1,t,dt):
     trueStateP[1][i-1] = enc.vel(i)
 
     ticks = enc.getTicks(i,noise=True)
+
     X_encoder[0] = tu.ticks_to_dist(ticks,ticksTours,startPos)
     X_encoder[1] = tu.ticks_to_v(X_encoder[0]-measuredStateP[0][i-2],dt)
     measuredStateP[0][i-1]=X_encoder[0]

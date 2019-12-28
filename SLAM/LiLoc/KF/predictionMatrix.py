@@ -9,7 +9,6 @@ def prediction2d(x, xdot, dt, a):
     B = np.array([[0.5 * dt ** 2],
                   [dt]])
     X_prime = A.dot(X) + B.dot(a)
-    print("a:", x,xdot,dt)
     return X_prime
 
 def covariance2d(sigma1, sigma2):

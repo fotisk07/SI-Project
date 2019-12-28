@@ -26,7 +26,7 @@ class Filter:
             n = len(M) #Array size
             X = pM.prediction2d(X[0][0], X[1][0], self.dt, a) #Predict state
             self.XP_fp = X
-            print("prediction:",X)
+
             # To simplify the problem set off-diagonal terms to 0.
             self.P = np.diag(np.diag(self.A.dot(self.P).dot(self.A.T)))
 

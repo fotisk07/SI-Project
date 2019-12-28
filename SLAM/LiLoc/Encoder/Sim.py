@@ -10,7 +10,7 @@ class Encoder():
         self.startPos = startPos
         self.wheelRadius = 0.1
 
-    def _noise(self,data,mu=0,std=10):
+    def _noise(self,data,mu=0,std=5):
         return int(data + gauss(mu,std))
 
 
