@@ -32,9 +32,10 @@ parser = argparse.ArgumentParser(
         This software is released under the MIT license
     (more details in LICENSE.md)
         Initial work:
-            Fotios Kapotos
-            Alexander Flamant
-            Mateo Rivera
+        Alexander Flamant
+        Theodore Halley
+        Fotios Kapotos
+        Mateo Rivera
      """)
 parser.add_argument("-d","--dimensions",
     nargs=2,
