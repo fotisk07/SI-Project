@@ -11,6 +11,7 @@ from LiSim import simResultProcess as prc
 from LiSim import path_gen as gen
 from LiMap.map_utils import map
 from LiMap.user_utils import plot
+from LiMap.user_utils import Performance as perf
 import argparse
 
 np.set_printoptions(precision=3)
@@ -97,6 +98,12 @@ parser.add_argument("-rl", "--relativeLoss",
     """,
     action="store_true"
 )
+parser.add_argument("-tours", "--tours_number",type=int,
+    help="""\
+        Number of tours
+    """,
+    default=100000
+)
 args = parser.parse_args()
 try:
     dim = tuple(args.dimensions)
@@ -110,11 +117,11 @@ graphs = args.graphs
 stats = args.stats
 video = args.video
 relativeLoss = args.relativeLoss
-
+tours_number = args.tours_number
 norm_scale = 0.01 #Map Scaling variable
 FPT = 1 #How many times the map will be update before plotted
 logloss = [] #Logloss list for plotting
-tours_count=0
+print(tours_number)
 
 
 #Initialize and get base info from LiSim
@@ -137,8 +144,7 @@ else:
 
 
 start = time.time() #start the clock
-while True:
-    tours_count+=1
+for tours_count in range(1,tours_number+1):
     #Generate the data points where the measurements must be made
     measure_points =np.array(gen.measure_turn(lidar.pos, 1))
     # Simulate measurement
@@ -156,14 +162,14 @@ while True:
         confusion = prc.genConfusionMatrix(scaled_carte, true_carte, lidar.pos, relativeLoss)
         logloss.append(prc.loss(confusion,lidar.dim))
     else:
-        scaled_carte = expit(carte*norm_scale*100)
-        graphs=True
+        scaled_carte = expit(carte*norm_scale)
         break
 
 cv2.destroyAllWindows()
 animation_time = time.time()-start # Measure running time
-print("FPS:", tours_count/animation_time)
+#print("FPS:", tours_count/animation_time)
 print("Nombre de tours:",tours_count)
+print("Confidence Score",perf.confidence(scaled_carte))
 #Plot the data
 if graphs == True:
     confusion = prc.genConfusionMatrix(scaled_carte, true_carte,lidar.pos,relativeLoss)

@@ -32,7 +32,7 @@ def setupPath(path="Examples/default"):
         pass
 
 # TODO: Slugification
-def plotData(data, name,pos, show=False, printa=False, save=True,path=""):
+def plotData(data, name,pos, show=False, printa=False, save=False,path=""):
     plt.style.use('ggplot')
     if path=="":
         path = _basePath
@@ -51,7 +51,7 @@ def plotData(data, name,pos, show=False, printa=False, save=True,path=""):
 
     return graph
 
-def plot_loss(loss,i, show=False, printa=False, save=True, path=""):
+def plot_loss(loss,i, show=False, printa=False, save=False, path=""):
     plt.style.use('seaborn')
     if path=="":
         path = _basePath
