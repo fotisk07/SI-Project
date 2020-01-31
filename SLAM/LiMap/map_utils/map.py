@@ -8,13 +8,10 @@ from LiSim import sim
 from LiMap.map_utils.vector_math import rotation
 from LiMap.user_utils import plot
 
-logodd_occ = 0.9
-logodd_free = 0.7
 
 # TODO:  pos and dim parameters are temporary, should be extracted from measure and previous_map in future versions
-def processLidarData(measure, previous_map, position, dim):
-    global logodd_occ
-    global logodd_free
+def processLidarData(measure, previous_map, position, dim,logodd_occ = 0.9,logodd_free = 0.7):
+
 
     for i in range(len(measure)):
 
