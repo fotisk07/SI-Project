@@ -18,4 +18,11 @@ ax.set_title('Loss as a function of odd and free');
 ax.set_xlabel('Free')
 ax.set_ylabel("Occ")
 ax.set_zlabel("Loss")
+plt.savefig('Loss_Graph.png')
+for angle in range(0, 360):
+    ax.view_init(30, angle)
+    plt.draw()
+    plt.pause(.001)
+
+
 plt.show()
