@@ -1,8 +1,8 @@
-from KF import Kf as kalman
-from Encoder import Sim as encSim
-from Encoder import ticks_utils as tu
-from Gyroscope import Sim as gyroSim
-from KF import plot_utils as plot
+from LeadLoc import Kf as kalman
+from LeadSim.Position.Encoder import Sim as encSim
+from LeadSim.Position.Encoder import ticks_utils as tu
+from LeadSim.Position.Gyroscope import Sim as gyroSim
+from LeadLoc import plot_utils as plot
 import numpy as np
 import matplotlib.pyplot as plt
 

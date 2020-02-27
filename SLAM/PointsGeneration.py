@@ -6,7 +6,7 @@ import cv2
 from cv2 import VideoWriter, VideoWriter_fourcc
 import time
 import sys
-from LiSim import sim
+from LeadSim import sim
 from LiSim import simResultProcess as prc
 from LiSim import path_gen as gen
 from LiMap.map_utils import map

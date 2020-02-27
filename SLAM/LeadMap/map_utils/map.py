@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 from scipy.special import expit
 from skimage.draw import line
 
-from LiSim import sim
-from LiMap.map_utils.vector_math import rotation
-from LiMap.user_utils import plot
 
+from LeadMap.map_utils.vector_math import rotation
 
 # TODO:  pos and dim parameters are temporary, should be extracted from measure and previous_map in future versions
 def processLidarData(measure, previous_map, position, dim,logodd_occ = 0.9,logodd_free = 0.7):

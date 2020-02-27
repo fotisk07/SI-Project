@@ -1,6 +1,6 @@
 import numpy as np
 from numpy.linalg import inv
-from KF import predictionMatrix as pM
+from LeadLoc import predictionMatrix as pM
 
 class Filter:
     '''

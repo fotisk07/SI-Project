@@ -6,12 +6,12 @@ import cv2
 from cv2 import VideoWriter, VideoWriter_fourcc
 import time
 import sys
-from LiSim import sim
-from LiSim import simResultProcess as prc
-from LiSim import path_gen as gen
-from LiMap.map_utils import map
-from LiMap.user_utils import plot
-from LiMap.user_utils import Performance as perf
+from LeadSim.Lidar import sim
+from LeadSim.Lidar import simResultProcess as prc
+from LeadSim.Lidar import path_gen as gen
+from LeadMap.map_utils import map
+from LeadSim.Lidar.Plot import Carte_plot as cplot
+from LeadSim.Lidar.Plot import Confidence as conf
 import argparse
 
 np.set_printoptions(precision=3)
@@ -138,10 +138,10 @@ carte = lidar.initialCarte
 # Setup save file paths for the simulation
 if changeEx:
     path = "Examples/dim="+str(dim)+"_pos=" +  str(lidar.pos)
-    plot.setuprootPath(path)
+    cplot.setuprootPath(path)
 else:
     path = "Examples/default"
-    plot.setuprootPath()
+    cplot.setuprootPath()
 
 
 start = time.time() #start the clock
@@ -156,7 +156,7 @@ for tours_count in range(1,tours_number+1):
         #Convert carte in 0-1 format
         scaled_carte = expit(carte*norm_scale)
         #Animate
-        plot.animate(scaled_carte,lidar.pos,"Produced Carte")
+        cplot.animate(scaled_carte,lidar.pos,"Produced Carte")
         if cv2.waitKey(1) & 0xFF == ord('q'): break
         #Generate confusion matrix and logloss
         confusion = prc.genConfusionMatrix(scaled_carte, true_carte, lidar.pos)
@@ -170,16 +170,16 @@ animation_time = time.time()-start # Measure running time
 if animate==True: print("FPS:", tours_count/animation_time)
 if animate==True: print("Loss:",logloss[-1])
 print("Nombre de tours:",tours_count)
-print("Confidence Score:",perf.confidence(scaled_carte))
+print("Confidence Score:",conf.confidence(scaled_carte))
 
 #Plot the data
 if graphs == True:
     confusion = prc.genConfusionMatrix(scaled_carte, true_carte,lidar.pos)
-    plot.plotData(confusion,"Confusion-Matrix",lidar.pos)
-    plot.plotData(true_carte,"Real-Map",lidar.pos)
-    plot.plotData(scaled_carte,"Produced-Map",lidar.pos)
+    cplot.plotData(confusion,"Confusion-Matrix",lidar.pos)
+    cplot.plotData(true_carte,"Real-Map",lidar.pos)
+    cplot.plotData(scaled_carte,"Produced-Map",lidar.pos)
     if animate == True:
-        plot.plot_loss(logloss,tours_count)
+        cplot.plot_loss(logloss,tours_count)
     else:
         print("Loss",prc.smart_loss(lidar, confusion,False))
     plt.show()
