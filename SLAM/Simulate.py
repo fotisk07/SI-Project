@@ -121,12 +121,13 @@ tours_number = args.tours_number
 norm_scale = 0.01 #Map Scaling variable
 FPT = 1 #How many times the map will be update before plotted
 logloss = [] #Logloss list for plotting
-print(tours_number)
+
 
 
 #Initialize and get base info from LiSim
 try:
-    lidar = sim.Lidar(dim=dim,pos=pos)
+    lidar = sim.Lidar(dim=dim,pos=pos, uDist=3)
+    print("Hey")
 except:
     lidar = sim.Lidar()
 
@@ -150,36 +151,37 @@ for tours_count in range(1,tours_number+1):
     # Simulate measurement
     simMeasure = lidar.simulate(points=measure_points,show=False,noise=isNoisy)
     #Update carte
-    carte = map.processLidarData(simMeasure, carte, lidar.pos, lidar.dim)
+    carte = map.processLidarData(simMeasure, carte, lidar.pos, lidar.dim, logodd_occ = 80 ,logodd_free = 20)
     if animate:
         #Convert carte in 0-1 format
         scaled_carte = expit(carte*norm_scale)
         #Animate
         plot.animate(scaled_carte,lidar.pos,"Produced Carte")
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        if cv2.waitKey(1) & 0xFF == ord('q'): break
         #Generate confusion matrix and logloss
-        confusion = prc.genConfusionMatrix(scaled_carte, true_carte, lidar.pos, relativeLoss)
-        logloss.append(prc.loss(confusion,lidar.dim))
+        confusion = prc.genConfusionMatrix(scaled_carte, true_carte, lidar.pos)
+        logloss.append(prc.smart_loss(lidar, confusion,False))
     else:
         scaled_carte = expit(carte*norm_scale)
         break
 
 cv2.destroyAllWindows()
 animation_time = time.time()-start # Measure running time
-#print("FPS:", tours_count/animation_time)
+if animate==True: print("FPS:", tours_count/animation_time)
+if animate==True: print("Loss:",logloss[-1])
 print("Nombre de tours:",tours_count)
-print("Confidence Score",perf.confidence(scaled_carte))
+print("Confidence Score:",perf.confidence(scaled_carte))
+
 #Plot the data
 if graphs == True:
-    confusion = prc.genConfusionMatrix(scaled_carte, true_carte,lidar.pos,relativeLoss)
+    confusion = prc.genConfusionMatrix(scaled_carte, true_carte,lidar.pos)
     plot.plotData(confusion,"Confusion-Matrix",lidar.pos)
     plot.plotData(true_carte,"Real-Map",lidar.pos)
     plot.plotData(scaled_carte,"Produced-Map",lidar.pos)
     if animate == True:
-        plot.plot_loss(logloss,tours_count-1)
+        plot.plot_loss(logloss,tours_count)
     else:
-        print("Loss",prc.loss(confusion,lidar.dim))
+        print("Loss",prc.smart_loss(lidar, confusion,False))
     plt.show()
 
 if stats == True:

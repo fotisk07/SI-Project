@@ -24,6 +24,13 @@ class Lidar:
         self.carte[dim[1]-1][:] = 1
         self.carte[:,dim[1]-1] = 1
 
+        for i in range(15,25):
+            self.carte[11][i] = 1
+
+        for i in range(16,20):
+            self.carte[i][i]=1
+
+
         #Create the reference initial working map for LiMap
         self.initialCarte = np.zeros(dim)
 

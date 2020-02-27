@@ -4,7 +4,7 @@ import math
 from scipy.special import expit
 
 def genConfusionMatrix(obs, true, pos, rl=False):
-    conf = 4*np.square(obs-true)
+    conf = np.square(obs-true)
     if rl==False:
         return conf
     else:
@@ -20,3 +20,19 @@ def genConfusionMatrix(obs, true, pos, rl=False):
 
 def loss(conf,dim):
     return (np.sum(conf)/(dim[0]*dim[1]))
+
+def weightor(x,rho):
+    return rho + (1-2*rho)*x
+
+def smart_loss(lidar, conf, real_world = True):
+    '''Scalar value ranging from 0 to 1'''
+    alpha = 1
+    beta = 1
+    kappa = 1
+    rho = np.sum(lidar.carte) / lidar.carte.size
+    if real_world:
+        weights = beta * np.exp(alpha * lidar.carte)
+    else:
+         weights = weightor(rho,lidar.carte)
+
+    return kappa *  np.sum(np.multiply(conf, weights)) / np.sum(weights)
