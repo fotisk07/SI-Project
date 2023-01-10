@@ -7,7 +7,7 @@ A radio remote controlled robot that maps the space around it.
 
  ```python simulate.py -d 50 50 -p 25 25 -n -ani -g``` 
  <p align="center">
-  <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/ezgif.com-video-to-gif.gif" width="300" height="300" />
+  <img src="[https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/ezgif.com-video-to-gif.gif](https://github.com/fotisk07/SI-Project/blob/master/SLAM/Examples/default/animation.avi)" width="300" height="300" />
 </p>
  <p float="center">
   <img src="https://github.com/fotisk07/SI-Project/blob/master/Mapping/Examples/dim%3D(50%2C%2050)_pos%3D(25%2C%2025)/Real-Map.png" width="400" />
